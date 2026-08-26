@@ -1,0 +1,64 @@
+/* ============================================
+   RESET Y CONFIGURACIÓN BASE
+   ============================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ============================================
+   BODY - LAYOUT PRINCIPAL
+   ============================================ */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+/* ============================================
+   HEADER - ESTILOS BASE
+   ============================================ */
+.header {
+    position: fixed; /* Fijo en la parte superior */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: flex-end; /* Alinear el botón a la derecha */
+    align-items: center;
+}
+
+/* ============================================
+   CONTENEDOR PRINCIPAL
+   ============================================ */
+.contenedor {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    color: white;
+    text-align: center;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    transition: all 0.3s ease;
+    margin-top: 80px; /* Espacio para el header fijo */
+}
+
+/* ============================================
+   TEXTO BIENVENIDA
+   ============================================ */
+p {
+    word-wrap: break-word;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* ============================================
+   MEDIA QUERY PARA TABLETS (opcional)
+   ============================================ */
+@media (max-width: 768px) and (min-width: 481px) {
+    /* Estilos específicos para tablets si los necesitas */
+}

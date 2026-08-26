@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOJAVID</title>
+    
+    <!-- CSS principal (común para todos) -->
+    <link rel="stylesheet" href="index-styles.css">
+    
+    <!-- CSS específico para PC (se carga solo en pantallas grandes) -->
+    <link rel="stylesheet" href="index-styles-pc.css" media="screen and (min-width: 769px)">
+    
+    <!-- CSS específico para móviles (se carga solo en pantallas pequeñas) -->
+    <link rel="stylesheet" href="index-styles-movil.css" media="screen and (max-width: 768px)">
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <!-- Boton Hamburguesa -->
+        <button class="menu-toggle" id="menuToggle">
+            <img src="iconohamburguesa.png" alt="Menu">
+        </button>
+        <!-- Navegacion del menu -->
+        <nav class="nav-principal" id="navPrincipal">
+            <ul class="nav-lista">
+                <li><a href="torah.html">TORAH</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="contenedor">
+        <p>Bienvenido</p>
+    </div>
+
+    <script src="index-script.js"></script>
+</body>
+</html>
