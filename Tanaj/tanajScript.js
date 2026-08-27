@@ -221,7 +221,10 @@ function mostrarListaVersiculos(indice) {
         return;
     }
 
-    if (!capitulo.versiculos || capitulo.versiculos.length === 0) {
+    // --- CORRECCIÓN: Usar "versiculo" (singular) en lugar de "versiculos" ---
+    const versiculosArray = capitulo.versiculo || capitulo.versiculos || [];
+    
+    if (versiculosArray.length === 0) {
         contenedor.innerHTML = '<div class="mensaje-error">No hay versículos en este capítulo.</div>';
         return;
     }
@@ -262,7 +265,7 @@ function mostrarListaVersiculos(indice) {
     subtituloLista.style.marginBottom = '20px';
     subtituloLista.style.borderBottom = '2px solid #010235';
     subtituloLista.style.paddingBottom = '10px';
-    subtituloLista.textContent = '📜 Versículos (' + capitulo.versiculos.length + ')';
+    subtituloLista.textContent = '📜 Versículos (' + versiculosArray.length + ')';
     listaContainer.appendChild(subtituloLista);
 
     // Grid de números de versículos
@@ -272,7 +275,7 @@ function mostrarListaVersiculos(indice) {
     gridVersos.style.gap = '10px';
     gridVersos.style.marginTop = '10px';
 
-    capitulo.versiculos.forEach((v) => {
+    versiculosArray.forEach((v) => {
         const btn = document.createElement('button');
         btn.textContent = v.numero;
         btn.dataset.numero = v.numero;
@@ -331,6 +334,9 @@ function mostrarCapituloConResaltado(indice, numeroVerso) {
         return;
     }
 
+    // --- CORRECCIÓN: Usar "versiculo" (singular) en lugar de "versiculos" ---
+    const versiculosArray = capitulo.versiculo || capitulo.versiculos || [];
+
     // MENÚ HAMBURGUESA
     const menuDiv = document.createElement('div');
     menuDiv.className = 'menu-hamburguesa';
@@ -365,14 +371,14 @@ function mostrarCapituloConResaltado(indice, numeroVerso) {
     contenedor.appendChild(nombreCap);
 
     // VERSÍCULOS - con resaltado temporal para el seleccionado
-    if (capitulo.versiculos && Array.isArray(capitulo.versiculos)) {
-        for (let i = 0; i < capitulo.versiculos.length; i++) {
-            const v = capitulo.versiculos[i];
+    if (versiculosArray.length > 0) {
+        for (let i = 0; i < versiculosArray.length; i++) {
+            const v = versiculosArray[i];
             const p = document.createElement('p');
             p.className = 'versiculo';
             p.id = 'verso-' + v.numero;
             
-            if (v.numero === numeroVerso) {
+            if (v.numero == numeroVerso) {
                 p.classList.add('versiculo-resaltado-temporal');
                 p.dataset.resaltado = 'true';
                 
@@ -473,6 +479,9 @@ function mostrarCapituloPorIndice(indice) {
         return;
     }
 
+    // --- CORRECCIÓN: Usar "versiculo" (singular) en lugar de "versiculos" ---
+    const versiculosArray = capitulo.versiculo || capitulo.versiculos || [];
+
     // MENÚ HAMBURGUESA
     const menuDiv = document.createElement('div');
     menuDiv.className = 'menu-hamburguesa';
@@ -507,9 +516,9 @@ function mostrarCapituloPorIndice(indice) {
     contenedor.appendChild(nombreCap);
 
     // VERSÍCULOS (sin resaltado)
-    if (capitulo.versiculos && Array.isArray(capitulo.versiculos)) {
-        for (let i = 0; i < capitulo.versiculos.length; i++) {
-            const v = capitulo.versiculos[i];
+    if (versiculosArray.length > 0) {
+        for (let i = 0; i < versiculosArray.length; i++) {
+            const v = versiculosArray[i];
             const p = document.createElement('p');
             p.className = 'versiculo';
             
