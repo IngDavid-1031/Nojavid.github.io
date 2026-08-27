@@ -1,7 +1,23 @@
 // ============================================
 // 1. RUTA DEL ARCHIVO DE DATOS
 // ============================================
-const RUTA_JSON = 'tanaj.json';
+// Ruta base donde están los archivos JSON
+const RUTA_BASE = '../Tanaj/libros/';
+
+// Mapeo de libros disponibles
+const LIBROS = {
+    genesis: { archivo: 'genesis.json', nombre: 'Génesis' },
+    exodo: { archivo: 'exodo.json', nombre: 'Exodo' },
+    levitco: {archivo: 'levitico.json', nombre: 'Levitico'},
+    numeros: {archivo: 'numeros.json', nombre: 'Numeros'},
+    deuteronomio: {archivo: 'deuteronomio.json', nombre: 'Deuteronomio'},
+    josue: {archivo: 'josue.json', nombre: 'Josue'}
+    // Agrega más libros aquí cuando los tengas
+};
+
+// Variable para el libro actual
+let libroActual = 'genesis';
+let RUTA_JSON = RUTA_BASE + LIBROS[libroActual].archivo;
 
 // ============================================
 // 2. VARIABLES GLOBALES
@@ -18,13 +34,43 @@ let touchStartY = 0;
 let touchEndY = 0;
 
 // ============================================
-// 3. FUNCIÓN PARA CARGAR LOS DATOS
+// 3. FUNCIÓN PARA CAMBIAR DE LIBRO
+// ============================================
+function cambiarLibro(nombreLibro) {
+    if (LIBROS[nombreLibro]) {
+        libroActual = nombreLibro;
+        RUTA_JSON = RUTA_BASE + LIBROS[libroActual].archivo;
+        
+        // Actualizar URL
+        const url = new URL(window.location.href);
+        url.searchParams.set('libro', nombreLibro);
+        url.searchParams.delete('capitulo');
+        url.searchParams.delete('verso');
+        window.history.pushState({}, '', url);
+        
+        cargarBiblia();
+    }
+}
+
+// ============================================
+// 4. FUNCIÓN PARA CARGAR LOS DATOS
 // ============================================
 async function cargarBiblia() {
     const contenedor = document.getElementById('contenedor-principal');
     contenedor.innerHTML = '<div class="mensaje-carga">Cargando archivo de datos...</div>';
 
     try {
+        // Verificar parámetros en la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const libroParam = urlParams.get('libro');
+        const capituloParam = urlParams.get('capitulo');
+        const versoParam = urlParams.get('verso');
+        
+        if (libroParam && LIBROS[libroParam]) {
+            libroActual = libroParam;
+            RUTA_JSON = RUTA_BASE + LIBROS[libroActual].archivo;
+        }
+        
         const respuesta = await fetch(RUTA_JSON);
 
         if (!respuesta.ok) {
@@ -39,28 +85,28 @@ async function cargarBiblia() {
 
         datosCompletos = datos;
         
-        // Verificar si hay parámetros en la URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const capituloParam = urlParams.get('capitulo');
-        const versoParam = urlParams.get('verso');
+        // Generar el menú con todos los libros
+        generarListaLibrosMenu();
         
+        // Si hay parámetros de capítulo/verso, mostrar eso
         if (capituloParam !== null) {
             indiceActual = parseInt(capituloParam);
             if (versoParam !== null) {
                 versuloAResaltar = parseInt(versoParam);
+                mostrarCapituloConResaltado(indiceActual, versuloAResaltar);
+            } else {
+                mostrarCapituloPorIndice(indiceActual);
             }
         } else {
+            // ✅ Si no hay capítulo en la URL, mostrar la LISTA DE CAPÍTULOS
             indiceActual = 0;
+            const titulo = datos[0]?.titulo || 'Sin título';
+            const indices = datos.map((_, i) => i);
+            mostrarListaCapitulos(titulo, indices);
         }
-        
-        generarListaLibrosDesdeJSON();
-        
-        // Mostrar el capítulo correspondiente
-        if (versuloAResaltar !== null) {
-            mostrarCapituloConResaltado(indiceActual, versuloAResaltar);
-        } else {
-            mostrarCapituloPorIndice(indiceActual);
-        }
+
+        // Actualizar el menú activo
+        actualizarMenuActivo();
 
     } catch (error) {
         document.getElementById('contenedor-principal').innerHTML = 
@@ -69,41 +115,32 @@ async function cargarBiblia() {
 }
 
 // ============================================
-// 4. GENERAR LISTA DE LIBROS DESDE JSON
+// 5. GENERAR LISTA DE LIBROS EN EL MENÚ
 // ============================================
-function generarListaLibrosDesdeJSON() {
+function generarListaLibrosMenu() {
     const lista = document.getElementById('lista-libros-menu');
     if (!lista) return;
     
     lista.innerHTML = '';
     
-    const librosAgrupados = {};
-    
-    datosCompletos.forEach((capitulo, index) => {
-        const titulo = capitulo.titulo || 'Sin título';
-        if (!librosAgrupados[titulo]) {
-            librosAgrupados[titulo] = {
-                titulo: titulo,
-                indices: []
-            };
-        }
-        librosAgrupados[titulo].indices.push(index);
-    });
-    
-    Object.keys(librosAgrupados).forEach((titulo) => {
-        const grupo = librosAgrupados[titulo];
+    // Mostrar TODOS los libros definidos en LIBROS
+    Object.keys(LIBROS).forEach((nombreClave) => {
+        const libroInfo = LIBROS[nombreClave];
         const li = document.createElement('li');
         const a = document.createElement('a');
-        a.textContent = titulo;
-        a.dataset.titulo = titulo;
-        a.dataset.indices = JSON.stringify(grupo.indices);
-        a.title = grupo.indices.length + ' capítulos';
+        a.textContent = libroInfo.nombre;
+        a.dataset.libro = nombreClave;
+        a.title = 'Libro de ' + libroInfo.nombre;
+        
+        // Marcar el libro activo
+        if (nombreClave === libroActual) {
+            a.classList.add('activo');
+        }
         
         a.addEventListener('click', function(e) {
             e.preventDefault();
-            const tituloSeleccionado = this.dataset.titulo;
-            const indices = JSON.parse(this.dataset.indices);
-            mostrarListaCapitulos(tituloSeleccionado, indices);
+            const libroSeleccionado = this.dataset.libro;
+            cambiarLibro(libroSeleccionado);
             cerrarMenu();
         });
         
@@ -113,7 +150,7 @@ function generarListaLibrosDesdeJSON() {
 }
 
 // ============================================
-// 5. MOSTRAR LISTA DE CAPÍTULOS DE UN LIBRO
+// 6. MOSTRAR LISTA DE CAPÍTULOS DE UN LIBRO
 // ============================================
 function mostrarListaCapitulos(titulo, indices) {
     const contenedor = document.getElementById('contenedor-principal');
@@ -195,8 +232,8 @@ function mostrarListaCapitulos(titulo, indices) {
         a.addEventListener('click', function(e) {
             e.preventDefault();
             indiceActual = index;
+            // ✅ Al hacer clic en un capítulo, mostrar la lista de versículos
             mostrarListaVersiculos(indiceActual);
-            actualizarMenuActivo();
         });
 
         li.appendChild(a);
@@ -208,7 +245,7 @@ function mostrarListaCapitulos(titulo, indices) {
 }
 
 // ============================================
-// 6. MOSTRAR LISTA DE VERSÍCULOS DE UN CAPÍTULO (SOLO NÚMEROS)
+// 7. MOSTRAR LISTA DE VERSÍCULOS DE UN CAPÍTULO (SOLO NÚMEROS)
 // ============================================
 function mostrarListaVersiculos(indice) {
     const contenedor = document.getElementById('contenedor-principal');
@@ -221,7 +258,6 @@ function mostrarListaVersiculos(indice) {
         return;
     }
 
-    // --- CORRECCIÓN: Usar "versiculo" (singular) en lugar de "versiculos" ---
     const versiculosArray = capitulo.versiculo || capitulo.versiculos || [];
     
     if (versiculosArray.length === 0) {
@@ -305,7 +341,12 @@ function mostrarListaVersiculos(indice) {
         
         btn.addEventListener('click', function() {
             const numeroVerso = parseInt(this.dataset.numero);
-            window.location.href = 'tanaj.html?capitulo=' + indice + '&verso=' + numeroVerso;
+            // ✅ Al hacer clic en un número de versículo, mostrar el texto con scroll automático
+            const url = new URL(window.location.href);
+            url.searchParams.set('libro', libroActual);
+            url.searchParams.set('capitulo', indice);
+            url.searchParams.set('verso', numeroVerso);
+            window.location.href = url.toString();
         });
 
         gridVersos.appendChild(btn);
@@ -321,7 +362,55 @@ function mostrarListaVersiculos(indice) {
 }
 
 // ============================================
-// 7. MOSTRAR CAPÍTULO CON VERSÍCULO RESALTADO (TEMPORAL + SCROLL)
+// 8. FUNCIÓN DE SCROLL CON OBSERVER
+// ============================================
+function scrollAlVersiculo(numeroVerso) {
+    let intentos = 0;
+    const MAX_INTENTOS = 100;
+    const INTERVALO = 100;
+    
+    function intentarScroll() {
+        const versoElement = document.getElementById('verso-' + numeroVerso);
+        
+        if (versoElement) {
+            requestAnimationFrame(function() {
+                const rect = versoElement.getBoundingClientRect();
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const targetPosition = rect.top + scrollTop - 80;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            });
+            return true;
+        } else if (intentos < MAX_INTENTOS) {
+            intentos++;
+            setTimeout(intentarScroll, INTERVALO);
+            return false;
+        } else {
+            console.warn('No se pudo encontrar el versículo ' + numeroVerso);
+            setTimeout(function() {
+                const elemento = document.getElementById('verso-' + numeroVerso);
+                if (elemento) {
+                    const rect = elemento.getBoundingClientRect();
+                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                    const targetPosition = rect.top + scrollTop - 80;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            }, 500);
+            return false;
+        }
+    }
+    
+    setTimeout(intentarScroll, 50);
+}
+
+// ============================================
+// 9. MOSTRAR CAPÍTULO CON VERSÍCULO RESALTADO Y SCROLL
 // ============================================
 function mostrarCapituloConResaltado(indice, numeroVerso) {
     const contenedor = document.getElementById('contenedor-principal');
@@ -334,7 +423,6 @@ function mostrarCapituloConResaltado(indice, numeroVerso) {
         return;
     }
 
-    // --- CORRECCIÓN: Usar "versiculo" (singular) en lugar de "versiculos" ---
     const versiculosArray = capitulo.versiculo || capitulo.versiculos || [];
 
     // MENÚ HAMBURGUESA
@@ -378,6 +466,7 @@ function mostrarCapituloConResaltado(indice, numeroVerso) {
             p.className = 'versiculo';
             p.id = 'verso-' + v.numero;
             
+            // ✅ Resaltar el versículo seleccionado
             if (v.numero == numeroVerso) {
                 p.classList.add('versiculo-resaltado-temporal');
                 p.dataset.resaltado = 'true';
@@ -422,14 +511,22 @@ function mostrarCapituloConResaltado(indice, numeroVerso) {
     btnIzq.addEventListener('click', function() {
         if (indiceActual > 0) {
             indiceActual--;
-            window.location.href = 'tanaj.html?capitulo=' + indiceActual;
+            const url = new URL(window.location.href);
+            url.searchParams.set('libro', libroActual);
+            url.searchParams.set('capitulo', indiceActual);
+            url.searchParams.delete('verso');
+            window.location.href = url.toString();
         }
     });
 
     btnDer.addEventListener('click', function() {
         if (indiceActual < datosCompletos.length - 1) {
             indiceActual++;
-            window.location.href = 'tanaj.html?capitulo=' + indiceActual;
+            const url = new URL(window.location.href);
+            url.searchParams.set('libro', libroActual);
+            url.searchParams.set('capitulo', indiceActual);
+            url.searchParams.delete('verso');
+            window.location.href = url.toString();
         }
     });
 
@@ -445,28 +542,16 @@ function mostrarCapituloConResaltado(indice, numeroVerso) {
     
     actualizarMenuActivo();
     
-    // ============================================
-    // SCROLL AUTOMÁTICO AL VERSÍCULO RESALTADO
-    // ============================================
+    // ✅ SCROLL AUTOMÁTICO AL VERSÍCULO SELECCIONADO
     setTimeout(function() {
-        const versoElement = document.getElementById('verso-' + numeroVerso);
-        if (versoElement) {
-            const rect = versoElement.getBoundingClientRect();
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            const targetPosition = rect.top + scrollTop - 80;
-            
-            window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
-            });
-        }
-    }, 150);
+        scrollAlVersiculo(numeroVerso);
+    }, 200);
     
     versuloAResaltar = null;
 }
 
 // ============================================
-// 8. MOSTRAR UN CAPÍTULO SEGÚN ÍNDICE (Vista normal sin resaltado)
+// 10. MOSTRAR UN CAPÍTULO SEGÚN ÍNDICE (Vista normal sin resaltado)
 // ============================================
 function mostrarCapituloPorIndice(indice) {
     const contenedor = document.getElementById('contenedor-principal');
@@ -479,7 +564,6 @@ function mostrarCapituloPorIndice(indice) {
         return;
     }
 
-    // --- CORRECCIÓN: Usar "versiculo" (singular) en lugar de "versiculos" ---
     const versiculosArray = capitulo.versiculo || capitulo.versiculos || [];
 
     // MENÚ HAMBURGUESA
@@ -556,14 +640,22 @@ function mostrarCapituloPorIndice(indice) {
     btnIzq.addEventListener('click', function() {
         if (indiceActual > 0) {
             indiceActual--;
-            window.location.href = 'tanaj.html?capitulo=' + indiceActual;
+            const url = new URL(window.location.href);
+            url.searchParams.set('libro', libroActual);
+            url.searchParams.set('capitulo', indiceActual);
+            url.searchParams.delete('verso');
+            window.location.href = url.toString();
         }
     });
 
     btnDer.addEventListener('click', function() {
         if (indiceActual < datosCompletos.length - 1) {
             indiceActual++;
-            window.location.href = 'tanaj.html?capitulo=' + indiceActual;
+            const url = new URL(window.location.href);
+            url.searchParams.set('libro', libroActual);
+            url.searchParams.set('capitulo', indiceActual);
+            url.searchParams.delete('verso');
+            window.location.href = url.toString();
         }
     });
 
@@ -581,19 +673,22 @@ function mostrarCapituloPorIndice(indice) {
 }
 
 // ============================================
-// 9. ACTUALIZAR ELEMENTO ACTIVO EN EL MENÚ
+// 11. ACTUALIZAR ELEMENTO ACTIVO EN EL MENÚ
 // ============================================
 function actualizarMenuActivo() {
     const enlaces = document.querySelectorAll('#lista-libros-menu a');
     enlaces.forEach((a) => {
-        const indices = JSON.parse(a.dataset.indices || '[]');
-        const esActivo = indices.includes(indiceActual);
-        a.classList.toggle('activo', esActivo);
+        const libro = a.dataset.libro;
+        if (libro === libroActual) {
+            a.classList.add('activo');
+        } else {
+            a.classList.remove('activo');
+        }
     });
 }
 
 // ============================================
-// 10. FUNCIONES DEL MENÚ HAMBURGUESA
+// 12. FUNCIONES DEL MENÚ HAMBURGUESA
 // ============================================
 function toggleMenu() {
     const menu = document.getElementById('menu-lateral');
@@ -617,20 +712,28 @@ function cerrarMenu() {
 }
 
 // ============================================
-// 11. FUNCIONES DE SWIPE PARA MÓVIL
+// 13. FUNCIONES DE SWIPE PARA MÓVIL
 // ============================================
 
 function irCapituloAnterior() {
     if (indiceActual > 0) {
         indiceActual--;
-        window.location.href = 'tanaj.html?capitulo=' + indiceActual;
+        const url = new URL(window.location.href);
+        url.searchParams.set('libro', libroActual);
+        url.searchParams.set('capitulo', indiceActual);
+        url.searchParams.delete('verso');
+        window.location.href = url.toString();
     }
 }
 
 function irCapituloSiguiente() {
     if (indiceActual < datosCompletos.length - 1) {
         indiceActual++;
-        window.location.href = 'tanaj.html?capitulo=' + indiceActual;
+        const url = new URL(window.location.href);
+        url.searchParams.set('libro', libroActual);
+        url.searchParams.set('capitulo', indiceActual);
+        url.searchParams.delete('verso');
+        window.location.href = url.toString();
     }
 }
 
@@ -669,7 +772,7 @@ function configurarSwipe() {
 }
 
 // ============================================
-// 12. EJECUTAR
+// 14. EJECUTAR
 // ============================================
 document.addEventListener('DOMContentLoaded', function() {
     cargarBiblia();
