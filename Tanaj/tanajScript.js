@@ -11,7 +11,23 @@ const LIBROS = {
     levitco: {archivo: 'levitico.json', nombre: 'Levitico'},
     numeros: {archivo: 'numeros.json', nombre: 'Numeros'},
     deuteronomio: {archivo: 'deuteronomio.json', nombre: 'Deuteronomio'},
-    josue: {archivo: 'josue.json', nombre: 'Josue'}
+    josue: {archivo: 'josue.json', nombre: 'Josue'},
+    jueces: {archivo: 'jueces.json', nombre: 'Juces'},
+    rut: {archivo: 'rut.json', nombre: 'Rut'},
+    isamuel: {archivo: 'isamuel.json', nombre: '1 Samuel'},
+    iisamuel: {archivo: 'iisamuel.json', nombre: '2 Samuel'},
+    ireyes: {archivo: 'ireyes.json', nombre: '1 Reyes'},
+    iireyes: {archivo: 'iireyes.json', nombre: '2 Reyes'},
+    icronicas: {archivo: 'icronicas.json', nombre: '1 Cronicas'},
+    iicronicas: {archivo: 'iicronicas.json', nombre: '2 Cronicas'},
+    esdras: {archivo: 'esdras.json', nombre: 'Esdras'},
+    nehemias: {archivo: 'nehemias.json', nombre: 'Nehemias'},
+    ester: {archivo: 'ester.json', nombre: 'Ester'},
+    job: {archivo: 'job.json', nombre: 'Job'},
+    salmos: {archivo: 'salmos.json', nombre: 'Salmos'},
+    proverbios: {archivo: 'proverbios.json', nombre: 'Proverbios'},
+    eclesiastes: {archivo: 'eclesiastes.json', nombre: 'Eclesiastes'},
+
     // Agrega más libros aquí cuando los tengas
 };
 
