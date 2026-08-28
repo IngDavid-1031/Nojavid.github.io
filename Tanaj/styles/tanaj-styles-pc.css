@@ -1,12 +1,11 @@
 /* ===== ESTILOS EXCLUSIVOS PARA PC (pantallas >= 769px) ===== */
-/* TODOS LOS DISEÑOS OCULTOS - SOLO MUESTRA MANTENIMIENTO */
+/* OCULTA TODO Y MUESTRA SOLO MANTENIMIENTO */
 
-/* Ocultar todo el contenido principal en PC */
+/* Ocultar todo el contenido en PC */
 #contenedor-principal {
     display: none !important;
 }
 
-/* Ocultar menú lateral en PC */
 #menu-lateral {
     display: none !important;
 }
@@ -15,7 +14,7 @@
     display: none !important;
 }
 
-/* ESTILOS PARA PANTALLA DE MANTENIMIENTO */
+/* Mostrar pantalla de mantenimiento SOLO en PC */
 #pantalla-mantenimiento {
     display: flex !important;
     flex-direction: column;
