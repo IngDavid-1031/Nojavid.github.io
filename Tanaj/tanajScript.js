@@ -1,4 +1,4 @@
-// ============================================
+// ============================================ 
 // 1. RUTA DEL ARCHIVO DE DATOS
 // ============================================
 // Ruta base donde están los archivos JSON
@@ -72,7 +72,6 @@ const LIBROS = {
     iiijuan: {archivo: 'iiijuan.json', nombre: '3 Juan'},
     judas: {archivo: 'judas.json', nombre: 'Judas'},
     apocalipsis: {archivo: 'apocalipsis.json', nombre: 'Apocalipsis'}
-    // Agrega más libros aquí cuando los tengas
 };
 
 // Variable para el libro actual
@@ -84,8 +83,8 @@ let RUTA_JSON = RUTA_BASE + LIBROS[libroActual].archivo;
 // ============================================
 let datosCompletos = [];
 let indiceActual = 0;
-let vistaActual = 'capitulo'; // 'capitulo', 'lista-capitulos' o 'lista-versiculos'
-let versuloAResaltar = null; // Número de versículo a resaltar
+let vistaActual = 'capitulo';
+let versuloAResaltar = null;
 
 // Variables para el swipe
 let touchStartX = 0;
@@ -101,7 +100,6 @@ function cambiarLibro(nombreLibro) {
         libroActual = nombreLibro;
         RUTA_JSON = RUTA_BASE + LIBROS[libroActual].archivo;
         
-        // Actualizar URL
         const url = new URL(window.location.href);
         url.searchParams.set('libro', nombreLibro);
         url.searchParams.delete('capitulo');
@@ -120,7 +118,6 @@ async function cargarBiblia() {
     contenedor.innerHTML = '<div class="mensaje-carga">Cargando archivo de datos...</div>';
 
     try {
-        // Verificar parámetros en la URL
         const urlParams = new URLSearchParams(window.location.search);
         const libroParam = urlParams.get('libro');
         const capituloParam = urlParams.get('capitulo');
@@ -145,10 +142,8 @@ async function cargarBiblia() {
 
         datosCompletos = datos;
         
-        // Generar el menú con todos los libros
         generarListaLibrosMenu();
         
-        // Si hay parámetros de capítulo/verso, mostrar eso
         if (capituloParam !== null) {
             indiceActual = parseInt(capituloParam);
             if (versoParam !== null) {
@@ -158,14 +153,12 @@ async function cargarBiblia() {
                 mostrarCapituloPorIndice(indiceActual);
             }
         } else {
-            // ✅ Si no hay capítulo en la URL, mostrar la LISTA DE CAPÍTULOS
             indiceActual = 0;
             const titulo = datos[0]?.titulo || 'Sin título';
             const indices = datos.map((_, i) => i);
             mostrarListaCapitulos(titulo, indices);
         }
 
-        // Actualizar el menú activo
         actualizarMenuActivo();
 
     } catch (error) {
@@ -183,7 +176,6 @@ function generarListaLibrosMenu() {
     
     lista.innerHTML = '';
     
-    // Mostrar TODOS los libros definidos en LIBROS
     Object.keys(LIBROS).forEach((nombreClave) => {
         const libroInfo = LIBROS[nombreClave];
         const li = document.createElement('li');
@@ -192,7 +184,6 @@ function generarListaLibrosMenu() {
         a.dataset.libro = nombreClave;
         a.title = 'Libro de ' + libroInfo.nombre;
         
-        // Marcar el libro activo
         if (nombreClave === libroActual) {
             a.classList.add('activo');
         }
@@ -222,7 +213,6 @@ function mostrarListaCapitulos(titulo, indices) {
         return;
     }
 
-    // MENÚ HAMBURGUESA
     const menuDiv = document.createElement('div');
     menuDiv.className = 'menu-hamburguesa';
     
@@ -235,13 +225,11 @@ function mostrarListaCapitulos(titulo, indices) {
     menuDiv.appendChild(menuBtn);
     contenedor.appendChild(menuDiv);
 
-    // TÍTULO DEL LIBRO
     const tituloLibro = document.createElement('h1');
     tituloLibro.className = 'titulo-libro-completo';
     tituloLibro.textContent = titulo;
     contenedor.appendChild(tituloLibro);
 
-    // LISTA DE CAPÍTULOS
     const listaContainer = document.createElement('div');
     listaContainer.className = 'lista-capitulos-container';
     listaContainer.style.marginTop = '30px';
@@ -292,7 +280,6 @@ function mostrarListaCapitulos(titulo, indices) {
         a.addEventListener('click', function(e) {
             e.preventDefault();
             indiceActual = index;
-            // ✅ Al hacer clic en un capítulo, mostrar la lista de versículos
             mostrarListaVersiculos(indiceActual);
         });
 
@@ -305,7 +292,7 @@ function mostrarListaCapitulos(titulo, indices) {
 }
 
 // ============================================
-// 7. MOSTRAR LISTA DE VERSÍCULOS DE UN CAPÍTULO (SOLO NÚMEROS)
+// 7. MOSTRAR LISTA DE VERSÍCULOS DE UN CAPÍTULO
 // ============================================
 function mostrarListaVersiculos(indice) {
     const contenedor = document.getElementById('contenedor-principal');
@@ -325,7 +312,6 @@ function mostrarListaVersiculos(indice) {
         return;
     }
 
-    // MENÚ HAMBURGUESA
     const menuDiv = document.createElement('div');
     menuDiv.className = 'menu-hamburguesa';
     
@@ -338,19 +324,16 @@ function mostrarListaVersiculos(indice) {
     menuDiv.appendChild(menuBtn);
     contenedor.appendChild(menuDiv);
 
-    // TÍTULO DEL LIBRO
     const titulo = document.createElement('h1');
     titulo.className = 'titulo-libro';
     titulo.textContent = capitulo.titulo || 'Sin título';
     contenedor.appendChild(titulo);
 
-    // NOMBRE DEL CAPÍTULO
     const nombreCap = document.createElement('div');
     nombreCap.className = 'nombre-capitulo';
     nombreCap.textContent = capitulo.capitulo || 'Capítulo';
     contenedor.appendChild(nombreCap);
 
-    // LISTA DE VERSÍCULOS (SOLO NÚMEROS)
     const listaContainer = document.createElement('div');
     listaContainer.className = 'lista-versiculos-container';
     listaContainer.style.marginTop = '20px';
@@ -364,7 +347,6 @@ function mostrarListaVersiculos(indice) {
     subtituloLista.textContent = '📜 Versículos (' + versiculosArray.length + ')';
     listaContainer.appendChild(subtituloLista);
 
-    // Grid de números de versículos
     const gridVersos = document.createElement('div');
     gridVersos.style.display = 'grid';
     gridVersos.style.gridTemplateColumns = 'repeat(auto-fill, minmax(60px, 1fr))';
@@ -401,7 +383,6 @@ function mostrarListaVersiculos(indice) {
         
         btn.addEventListener('click', function() {
             const numeroVerso = parseInt(this.dataset.numero);
-            // ✅ Al hacer clic en un número de versículo, mostrar el texto con scroll automático
             const url = new URL(window.location.href);
             url.searchParams.set('libro', libroActual);
             url.searchParams.set('capitulo', indice);
@@ -415,7 +396,6 @@ function mostrarListaVersiculos(indice) {
     listaContainer.appendChild(gridVersos);
     contenedor.appendChild(listaContainer);
 
-    // SEPARADOR
     const separador = document.createElement('hr');
     separador.className = 'separador-capitulo';
     contenedor.appendChild(separador);
@@ -470,7 +450,7 @@ function scrollAlVersiculo(numeroVerso) {
 }
 
 // ============================================
-// 9. MOSTRAR CAPÍTULO CON VERSÍCULO RESALTADO Y SCROLL
+// 9. MOSTRAR CAPÍTULO CON VERSÍCULO RESALTADO
 // ============================================
 function mostrarCapituloConResaltado(indice, numeroVerso) {
     const contenedor = document.getElementById('contenedor-principal');
@@ -485,7 +465,6 @@ function mostrarCapituloConResaltado(indice, numeroVerso) {
 
     const versiculosArray = capitulo.versiculo || capitulo.versiculos || [];
 
-    // MENÚ HAMBURGUESA
     const menuDiv = document.createElement('div');
     menuDiv.className = 'menu-hamburguesa';
     
@@ -498,13 +477,11 @@ function mostrarCapituloConResaltado(indice, numeroVerso) {
     menuDiv.appendChild(menuBtn);
     contenedor.appendChild(menuDiv);
 
-    // TÍTULO
     const titulo = document.createElement('h1');
     titulo.className = 'titulo-libro';
     titulo.textContent = capitulo.titulo || 'Sin título';
     contenedor.appendChild(titulo);
 
-    // SUBTÍTULO
     if (capitulo.subtitulo) {
         const subtitulo = document.createElement('div');
         subtitulo.className = 'subtitulo-capitulo';
@@ -512,13 +489,11 @@ function mostrarCapituloConResaltado(indice, numeroVerso) {
         contenedor.appendChild(subtitulo);
     }
 
-    // NOMBRE CAPÍTULO
     const nombreCap = document.createElement('div');
     nombreCap.className = 'nombre-capitulo';
     nombreCap.textContent = capitulo.capitulo || 'Capítulo';
     contenedor.appendChild(nombreCap);
 
-    // VERSÍCULOS - con resaltado temporal para el seleccionado
     if (versiculosArray.length > 0) {
         for (let i = 0; i < versiculosArray.length; i++) {
             const v = versiculosArray[i];
@@ -526,7 +501,6 @@ function mostrarCapituloConResaltado(indice, numeroVerso) {
             p.className = 'versiculo';
             p.id = 'verso-' + v.numero;
             
-            // ✅ Resaltar el versículo seleccionado
             if (v.numero == numeroVerso) {
                 p.classList.add('versiculo-resaltado-temporal');
                 p.dataset.resaltado = 'true';
@@ -550,7 +524,6 @@ function mostrarCapituloConResaltado(indice, numeroVerso) {
         }
     }
 
-    // BOTONES DE NAVEGACIÓN ◀ ▶
     const navDiv = document.createElement('div');
     navDiv.className = 'nav-botones';
 
@@ -595,14 +568,12 @@ function mostrarCapituloConResaltado(indice, numeroVerso) {
     navDiv.appendChild(btnDer);
     contenedor.appendChild(navDiv);
 
-    // SEPARADOR
     const separador = document.createElement('hr');
     separador.className = 'separador-capitulo';
     contenedor.appendChild(separador);
     
     actualizarMenuActivo();
     
-    // ✅ SCROLL AUTOMÁTICO AL VERSÍCULO SELECCIONADO
     setTimeout(function() {
         scrollAlVersiculo(numeroVerso);
     }, 200);
@@ -611,7 +582,7 @@ function mostrarCapituloConResaltado(indice, numeroVerso) {
 }
 
 // ============================================
-// 10. MOSTRAR UN CAPÍTULO SEGÚN ÍNDICE (Vista normal sin resaltado)
+// 10. MOSTRAR UN CAPÍTULO SEGÚN ÍNDICE
 // ============================================
 function mostrarCapituloPorIndice(indice) {
     const contenedor = document.getElementById('contenedor-principal');
@@ -626,7 +597,6 @@ function mostrarCapituloPorIndice(indice) {
 
     const versiculosArray = capitulo.versiculo || capitulo.versiculos || [];
 
-    // MENÚ HAMBURGUESA
     const menuDiv = document.createElement('div');
     menuDiv.className = 'menu-hamburguesa';
     
@@ -639,13 +609,11 @@ function mostrarCapituloPorIndice(indice) {
     menuDiv.appendChild(menuBtn);
     contenedor.appendChild(menuDiv);
 
-    // TÍTULO
     const titulo = document.createElement('h1');
     titulo.className = 'titulo-libro';
     titulo.textContent = capitulo.titulo || 'Sin título';
     contenedor.appendChild(titulo);
 
-    // SUBTÍTULO
     if (capitulo.subtitulo) {
         const subtitulo = document.createElement('div');
         subtitulo.className = 'subtitulo-capitulo';
@@ -653,13 +621,11 @@ function mostrarCapituloPorIndice(indice) {
         contenedor.appendChild(subtitulo);
     }
 
-    // NOMBRE CAPÍTULO
     const nombreCap = document.createElement('div');
     nombreCap.className = 'nombre-capitulo';
     nombreCap.textContent = capitulo.capitulo || 'Capítulo';
     contenedor.appendChild(nombreCap);
 
-    // VERSÍCULOS (sin resaltado)
     if (versiculosArray.length > 0) {
         for (let i = 0; i < versiculosArray.length; i++) {
             const v = versiculosArray[i];
@@ -679,7 +645,6 @@ function mostrarCapituloPorIndice(indice) {
         }
     }
 
-    // BOTONES DE NAVEGACIÓN
     const navDiv = document.createElement('div');
     navDiv.className = 'nav-botones';
 
@@ -724,7 +689,6 @@ function mostrarCapituloPorIndice(indice) {
     navDiv.appendChild(btnDer);
     contenedor.appendChild(navDiv);
 
-    // SEPARADOR
     const separador = document.createElement('hr');
     separador.className = 'separador-capitulo';
     contenedor.appendChild(separador);
@@ -774,7 +738,6 @@ function cerrarMenu() {
 // ============================================
 // 13. FUNCIONES DE SWIPE PARA MÓVIL
 // ============================================
-
 function irCapituloAnterior() {
     if (indiceActual > 0) {
         indiceActual--;
@@ -832,9 +795,10 @@ function configurarSwipe() {
 }
 
 // ============================================
-// 14. EJECUTAR
+// 14. EJECUTAR - SOLO PARA MÓVIL
 // ============================================
 document.addEventListener('DOMContentLoaded', function() {
+    // Solo ejecutar si es móvil (ya validado desde el HTML)
     cargarBiblia();
     setTimeout(configurarSwipe, 100);
     

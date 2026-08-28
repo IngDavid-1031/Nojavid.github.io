@@ -1,5 +1,5 @@
 /* ===== ESTILOS EXCLUSIVOS PARA PC (pantallas >= 769px) ===== */
-/* OCULTA TODO Y MUESTRA SOLO MANTENIMIENTO */
+/* TODO OCULTO - mantenimiento.js se encarga de mostrar el mensaje */
 
 /* Ocultar todo el contenido en PC */
 #contenedor-principal {
@@ -14,116 +14,8 @@
     display: none !important;
 }
 
-/* Mostrar pantalla de mantenimiento SOLO en PC */
-#pantalla-mantenimiento {
-    display: flex !important;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: #0a0a1a;
-    color: #ffffff;
-    font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
-    padding: 2rem;
-    text-align: center;
-}
-
-#pantalla-mantenimiento h1 {
-    font-size: 48px;
-    font-weight: 700;
-    margin-bottom: 20px;
-    background: linear-gradient(135deg, #6c95c4, #a8b5d6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-#pantalla-mantenimiento p {
-    font-size: 20px;
-    color: #aab;
-    margin-bottom: 30px;
-    max-width: 500px;
-    line-height: 1.6;
-}
-
-#pantalla-mantenimiento .icono-mantenimiento {
-    font-size: 80px;
-    margin-bottom: 20px;
-}
-
-/* RUEDA GIRANDO */
-.spinner-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 10px 0 30px 0;
-}
-
-.spinner {
-    width: 60px;
-    height: 60px;
-    border: 5px solid rgba(108, 149, 196, 0.2);
-    border-top: 5px solid #6c95c4;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* Versión más grande de la ruleta */
-.spinner-large {
-    width: 80px;
-    height: 80px;
-    border-width: 6px;
-    border-top-color: #a8b5d6;
-}
-
-/* Barra de progreso animada */
-.barra-progreso {
-    width: 200px;
-    height: 4px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 4px;
-    overflow: hidden;
-    margin-top: 20px;
-}
-
-.barra-progreso .barra-llena {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, #6c95c4, #a8b5d6);
-    border-radius: 4px;
-    animation: cargaBarra 2s ease-in-out infinite;
-}
-
-@keyframes cargaBarra {
-    0% { width: 0%; }
-    50% { width: 70%; }
-    100% { width: 100%; }
-}
-
-/* Texto de estado */
-.estado-mantenimiento {
-    font-size: 14px;
-    color: #667;
-    margin-top: 15px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    animation: parpadeo 1.5s ease-in-out infinite;
-}
-
-@keyframes parpadeo {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-}
-
-/* Pequeña nota de copyright */
-.nota-pie {
-    margin-top: 40px;
-    font-size: 12px;
-    color: #445;
-    letter-spacing: 1px;
+/* Reset del body en PC - mantenimiento.js lo maneja */
+body {
+    margin: 0 !important;
+    padding: 0 !important;
 }

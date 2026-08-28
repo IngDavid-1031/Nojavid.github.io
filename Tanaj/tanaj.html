@@ -8,7 +8,7 @@
     <!-- CSS principal -->
     <link rel="stylesheet" href="styles/tanaj-styles.css">
     
-    <!-- CSS específico para PC (oculta todo y muestra mantenimiento) -->
+    <!-- CSS específico para PC (oculta todo) -->
     <link rel="stylesheet" href="styles/tanaj-styles-pc.css" media="screen and (min-width: 769px)">
     
     <!-- CSS específico para móviles -->
@@ -17,35 +17,14 @@
 <body>
 
     <!-- ========================================== -->
-    <!-- PANTALLA DE MANTENIMIENTO (SOLO PC)       -->
-    <!-- ========================================== -->
-    <div id="pantalla-mantenimiento">
-        <div class="icono-mantenimiento">🛠️</div>
-        <h1>Mantenimiento no disponible</h1>
-        <p>La versión de escritorio se encuentra en mantenimiento. Por favor, utiliza tu dispositivo móvil para acceder al contenido.</p>
-        
-        <div class="spinner-container">
-            <div class="spinner spinner-large"></div>
-        </div>
-        
-        <div class="barra-progreso">
-            <div class="barra-llena"></div>
-        </div>
-        
-        <div class="estado-mantenimiento">⚡ Actualizando sistema ⚡</div>
-        
-        <div class="nota-pie">Tanaj Digital • Versión 1.0</div>
-    </div>
-
-    <!-- ========================================== -->
-    <!-- CONTENEDOR PRINCIPAL (SOLO MÓVIL)         -->
+    <!-- CONTENEDOR PRINCIPAL                       -->
     <!-- ========================================== -->
     <div id="contenedor-principal">
         <!-- EL CONTENIDO SE GENERA CON JAVASCRIPT -->
     </div>
 
     <!-- ========================================== -->
-    <!-- MENÚ LATERAL (SOLO MÓVIL)                 -->
+    <!-- MENÚ LATERAL                              -->
     <!-- ========================================== -->
     <div id="menu-lateral" class="menu-cerrado">
         <div class="menu-header">
@@ -60,7 +39,22 @@
     <!-- Overlay para cerrar el menú -->
     <div id="overlay-menu"></div>
 
-    <script src="../Tanaj/tanajScript.js"></script>
+    <!-- ========================================== -->
+    <!-- SCRIPTS                                   -->
+    <!-- ========================================== -->
+    <!-- MANTENIMIENTO: Solo se carga en PC -->
+    <script src="../Tanaj/mantenimiento.js"></script>
+    
+    <!-- APP PRINCIPAL: Solo se carga en móvil -->
+    <script>
+        // Detectar si es móvil y cargar la app
+        if (window.innerWidth < 769) {
+            // Cargar el script principal dinámicamente
+            const script = document.createElement('script');
+            script.src = '../Tanaj/tanajScript.js';
+            document.body.appendChild(script);
+        }
+    </script>
 
 </body>
 </html>

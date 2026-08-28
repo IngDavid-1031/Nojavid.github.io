@@ -19,11 +19,6 @@ body {
     padding: 0 0.2rem;
 }
 
-/* ===== PANTALLA DE MANTENIMIENTO - OCULTA POR DEFECTO ===== */
-#pantalla-mantenimiento {
-    display: none !important;
-}
-
 /* ===== TÍTULO H1 ===== */
 .titulo-libro {
     font-size: 36px;
