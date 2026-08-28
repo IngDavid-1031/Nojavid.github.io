@@ -5,34 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NOJAVID</title>
     
-    <!-- CSS principal (común para todos) -->
+    <!-- CSS principal -->
     <link rel="stylesheet" href="index-styles.css">
     
-    <!-- CSS específico para PC (se carga solo en pantallas grandes) -->
-    <link rel="stylesheet" href="index-styles-pc.css" media="screen and (min-width: 769px)">
-    
-    <!-- CSS específico para móviles (se carga solo en pantallas pequeñas) -->
+    <!-- CSS específico para móviles -->
     <link rel="stylesheet" href="index-styles-movil.css" media="screen and (max-width: 768px)">
 </head>
 <body>
     <!-- HEADER -->
     <header class="header">
-        <!-- Boton Hamburguesa -->
-        <button class="menu-toggle" id="menuToggle">
-            <img src="iconos/Barradebusqueda.png" alt="Menu">
-        </button>
-        <!-- Navegacion del menu -->
-        <nav class="nav-principal" id="navPrincipal">
-            <ul class="nav-lista">
-                <li><a href="Torah/torah.html">TORAH</a></li>
-            </ul>
-        </nav>
+        <!-- Menú desplegable a la izquierda -->
+        <div class="menu-container">
+            <button class="menu-btn" id="menuBtn" aria-label="Menú">
+                <span class="menu-icon">☰</span>
+            </button>
+            <!-- Menú que se desliza desde la izquierda -->
+            <div class="menu-overlay" id="menuOverlay">
+                <div class="menu-slide" id="menuSlide">
+                    <button class="menu-close" id="menuClose">✕</button>
+                    <nav class="menu-nav">
+                        <a href="Torah/torah.html" class="menu-item-full">Tora</a>
+                        <!-- Aquí puedes agregar más opciones en el futuro -->
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <!-- Título NOJAVID en la esquina derecha -->
+        <span class="titulo-nojavid" id="tituloNojavid">NOJAVID</span>
     </header>
 
-    <div class="contenedor">
-        <p>Bienvenido</p>
+    <!-- Contenedor de la imagen -->
+    <div class="contenedor-imagen">
+        <img src="iconos/iconocuadrado.png" alt="Icono cuadrado" class="imagen-centrada" loading="lazy">
+        <!-- Foto superpuesta -->
+        <img src="imagenes/foto.jpg" alt="Foto" class="foto-superpuesta" loading="lazy">
     </div>
 
+    <!-- Textos debajo de la imagen -->
+    <div class="contenedor-textos">
+        <h1 class="texto-nombre">Nojavid</h1>
+        <p class="texto-subtitulo">Coach & Desarrollador</p>
+    </div>
+    
+    <!-- SCRIPT PRINCIPAL -->
     <script src="index-script.js"></script>
 </body>
 </html>

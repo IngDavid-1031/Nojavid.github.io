@@ -11,54 +11,326 @@
    BODY - LAYOUT PRINCIPAL
    ============================================ */
 body {
+    background-color: #1D1E22;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
     min-height: 100vh;
     font-family: Arial, sans-serif;
+    padding: 0;
+    margin: 0;
 }
 
 /* ============================================
-   HEADER - ESTILOS BASE
+   HEADER - TÍTULO EN ESQUINA DERECHA CON MENÚ
    ============================================ */
 .header {
-    position: fixed; /* Fijo en la parte superior */
+    width: 100%;
+    background-color: #000000;
+    padding: 16px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    z-index: 1000;
+}
+
+/* ============================================
+   MENÚ DESLIZABLE DESDE LA IZQUIERDA
+   ============================================ */
+.menu-container {
+    position: relative;
+    z-index: 1001;
+    flex-shrink: 0;
+}
+
+.menu-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+    padding: 4px 10px;
+    border-radius: 6px;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.menu-icon {
+    line-height: 1;
+}
+
+/* Overlay de fondo - semi-transparente */
+.menu-overlay {
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 1000;
-    background: rgba(0, 0, 0, 0.8);
-    padding: 15px 20px;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    cursor: pointer; /* Indica que se puede hacer clic para cerrar */
+}
+
+.menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Menú que se desliza - solo el ancho necesario */
+.menu-slide {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: auto;
+    min-width: 200px;
+    max-width: 400px;
+    background-color: #000000;
+    z-index: 10000;
+    transform: translateX(-100%);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
-    justify-content: flex-end; /* Alinear el botón a la derecha */
-    align-items: center;
+    flex-direction: column;
+    padding: 60px 50px;
+    box-shadow: 4px 0 30px rgba(0, 0, 0, 0.8);
+    overflow-y: auto;
+    cursor: default; /* Cursor normal dentro del menú */
+}
+
+.menu-overlay.active .menu-slide {
+    transform: translateX(0);
+}
+
+/* Botón de cierre */
+.menu-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+    transition: transform 0.3s ease, color 0.3s ease;
+    padding: 5px 10px;
+    line-height: 1;
+}
+
+.menu-close:hover {
+    transform: rotate(90deg);
+    color: #ff6b6b;
+}
+
+/* Navegación del menú */
+.menu-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 25px;
+    margin-top: 30px;
+    width: 100%;
+}
+
+.menu-item-full {
+    color: white;
+    text-decoration: none;
+    font-size: 32px;
+    font-weight: 300;
+    letter-spacing: 3px;
+    padding: 10px 0;
+    transition: all 0.3s ease;
+    position: relative;
+    text-transform: uppercase;
+    width: 100%;
+    white-space: nowrap;
+}
+
+.menu-item-full::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: white;
+    transition: all 0.3s ease;
+}
+
+.menu-item-full:hover {
+    color: #ffd700;
+    transform: translateX(10px);
+}
+
+.menu-item-full:hover::after {
+    width: 100%;
 }
 
 /* ============================================
-   CONTENEDOR PRINCIPAL
+   TÍTULO NOJAVID - ESQUINA DERECHA
    ============================================ */
-.contenedor {
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 20px;
+.titulo-nojavid {
+    color: white;
+    font-weight: bold;
+    font-size: 26px;
+    letter-spacing: 2px;
+    white-space: nowrap;
+    padding: 4px 0;
+    overflow: hidden;
+    border-right: 2px solid white;
+    animation: escribir 2.5s steps(25) 1s forwards, parpadeo 0.8s step-end 3;
+    width: 0;
+    max-width: fit-content;
+    margin-left: auto;
+}
+
+@keyframes escribir {
+    0% { width: 0; }
+    100% { width: 100%; }
+}
+
+@keyframes parpadeo {
+    0%, 100% { border-color: white; }
+    50% { border-color: transparent; }
+}
+
+/* ============================================
+   CONTENEDOR DE LA IMAGEN
+   ============================================ */
+.contenedor-imagen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 20px 0;
+    margin-top: 10px;
+    position: relative;
+}
+
+.imagen-centrada {
+    width: 393px;
+    height: 393px;
+    max-width: 90vw;
+    max-height: 90vw;
+    object-fit: contain;
+    filter: blur(50px);
+    border-radius: 75px;
+    transition: filter 0.3s ease;
+    transform: translate(0px, -137px);
+}
+
+/* ============================================
+   FOTO SUPUESTA - BORDES 200 Y MOVIDA A LA IZQUIERDA
+   ============================================ */
+.foto-superpuesta {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(calc(-50% + 30px), calc(-50% + 100px));
+    width: 458px;
+    height: 458px;
+    border-radius: 200px;
+    z-index: 10;
+    object-fit: cover;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+
+/* ============================================
+   TEXTOS DEBAJO DE LA IMAGEN
+   ============================================ */
+.contenedor-textos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 20px 0;
+    margin-top: 20px;
+    transform: translateX(3px);
+}
+
+.texto-nombre {
+    font-size: 48px;
+    font-weight: 900;
     color: white;
     text-align: center;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    transition: all 0.3s ease;
-    margin-top: 80px; /* Espacio para el header fijo */
+    margin: 0;
+    padding: 0;
+    line-height: 1.2;
+    letter-spacing: 2px;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.texto-subtitulo {
+    font-size: 20px;
+    font-weight: 900;
+    color: white;
+    text-align: center;
+    margin: 5px 0 0 0;
+    padding: 0;
+    line-height: 1.2;
+    letter-spacing: 3px;
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
 }
 
 /* ============================================
-   TEXTO BIENVENIDA
+   RESPONSIVE - AJUSTES GENERALES
    ============================================ */
-p {
-    word-wrap: break-word;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-}
+@media (max-width: 480px) {
+    .titulo-nojavid {
+        font-size: 18px;
+    }
+    
+    .imagen-centrada {
+        width: 80vw;
+        height: 80vw;
+        transform: translate(0px, -70px);
+        border-radius: 40px;
+        filter: blur(30px);
+    }
+    
+    .texto-nombre {
+        font-size: 36px;
+    }
+    
+    .texto-subtitulo {
+        font-size: 16px;
+    }
+    
+    .contenedor-textos {
+        margin-top: 5px;
+    }
 
-/* ============================================
-   MEDIA QUERY PARA TABLETS (opcional)
-   ============================================ */
-@media (max-width: 768px) and (min-width: 481px) {
-    /* Estilos específicos para tablets si los necesitas */
+    .menu-slide {
+        padding: 40px 30px;
+        min-width: 160px;
+        max-width: 320px;
+    }
+
+    .menu-item-full {
+        font-size: 24px;
+        letter-spacing: 2px;
+    }
+
+    .menu-close {
+        font-size: 24px;
+        top: 15px;
+        right: 15px;
+    }
+
+    .menu-nav {
+        gap: 18px;
+        margin-top: 20px;
+    }
 }

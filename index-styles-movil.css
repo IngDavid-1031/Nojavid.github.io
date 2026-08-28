@@ -2,182 +2,266 @@
    ESTILOS EXCLUSIVOS PARA MÓVILES Y TABLETS
    ============================================ */
 
-/* Fondo para móviles */
-body {
-    background-image: url('Imagenes/fondocel.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    padding: 1rem;
-}
-
-/* ============================================
-   ESTILOS DEL MENÚ HAMBURGUESA
-   ============================================ */
-.menu-toggle {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 5px;
-    z-index: 1001;
-}
-
-.menu-toggle img {
-    width: 30px;
-    height: 30px;
-    display: block;
-}
-
-/* Navegación - oculta por defecto */
-.nav-principal {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    z-index: 1000;
-    padding: 10px 0;
-}
-
-/* Cuando el menú está activo, se muestra */
-.nav-principal.activo {
-    display: block;
-    animation: slideDown 0.3s ease-out;
-}
-
-/* Animación de despliegue */
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Lista del menú */
-.nav-lista {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-}
-
-.nav-lista li {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.nav-lista li:last-child {
-    border-bottom: none;
-}
-
-.nav-lista a {
-    display: block;
-    padding: 15px 25px;
-    color: white;
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    text-align: center;
-    letter-spacing: 1px;
-}
-
-.nav-lista a:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: #ffd700;
-    padding-left: 30px;
-}
-
 /* ============================================
    HEADER PARA MÓVILES
    ============================================ */
 .header {
-    background: rgba(0, 0, 0, 0.85);
-    padding: 10px 15px;
+    background: rgba(0, 0, 0, 0.9);
+    padding: 14px 20px;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    display: flex;
-    justify-content: flex-end; /* Botón a la derecha */
-    align-items: center;
 }
 
 /* ============================================
-   CONTENEDOR PARA MÓVILES
+   MENÚ DESLIZABLE EN MÓVILES
    ============================================ */
-.contenedor {
-    padding: 2rem 2rem;
-    max-width: 95%;
-    width: auto;
+.menu-btn {
+    font-size: 24px;
+    padding: 2px 8px;
 }
 
-p {
-    font-size: 1rem;
-    margin-top: 0;
+.menu-slide {
+    padding: 35px 25px;
+    min-width: 150px;
+    max-width: 300px;
 }
 
-/* Estilos para tablets */
+.menu-close {
+    font-size: 22px;
+    top: 12px;
+    right: 12px;
+}
+
+.menu-item-full {
+    font-size: 22px;
+    letter-spacing: 2px;
+    padding: 8px 0;
+}
+
+.menu-nav {
+    gap: 15px;
+    margin-top: 15px;
+}
+
+/* ============================================
+   TÍTULO PARA MÓVILES - ESQUINA DERECHA
+   ============================================ */
+.titulo-nojavid {
+    font-size: 20px;
+    letter-spacing: 1.5px;
+}
+
+/* ============================================
+   CONTENEDOR DE IMAGEN PARA MÓVILES
+   ============================================ */
+.contenedor-imagen {
+    padding: 15px 0;
+    margin-top: 5px;
+}
+
+.imagen-centrada {
+    width: 80vw;
+    height: 80vw;
+    max-width: 393px;
+    max-height: 393px;
+    transform: translate(0px, -137px);
+    border-radius: 40px;
+    filter: blur(30px);
+}
+
+/* ============================================
+   FOTO SUPUESTA - VERSIÓN MÓVIL
+   ============================================ */
+.foto-superpuesta {
+    width: 300px;
+    height: 300px;
+    transform: translate(calc(-50% + 15px), calc(-50% + 60px));
+    border-radius: 200px;
+}
+
+/* ============================================
+   TEXTOS DEBAJO DE LA IMAGEN - VERSIÓN MÓVIL
+   ============================================ */
+.contenedor-textos {
+    padding: 15px 0;
+    margin-top: 10px;
+    transform: translateX(3px);
+}
+
+.texto-nombre {
+    font-size: 36px;
+    font-weight: 900;
+}
+
+.texto-subtitulo {
+    font-size: 16px;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+/* ============================================
+   ESTILOS PARA TABLETS (481px - 768px)
+   ============================================ */
 @media (min-width: 481px) and (max-width: 768px) {
-    .contenedor {
-        padding: 3rem 4rem;
-        max-width: 90%;
+    .titulo-nojavid {
+        font-size: 22px;
+        letter-spacing: 2px;
     }
     
-    p {
-        font-size: 1.2rem;
+    .imagen-centrada {
+        width: 60vw;
+        height: 60vw;
+        transform: translate(0px, -137px);
+        border-radius: 50px;
+        filter: blur(35px);
     }
     
-    .nav-lista a {
+    .foto-superpuesta {
+        width: 360px;
+        height: 360px;
+        transform: translate(calc(-50% + 25px), calc(-50% + 75px));
+        border-radius: 200px;
+    }
+    
+    .contenedor-textos {
+        margin-top: 15px;
+    }
+    
+    .texto-nombre {
+        font-size: 42px;
+    }
+    
+    .texto-subtitulo {
         font-size: 18px;
-        padding: 18px 30px;
+    }
+
+    .menu-slide {
+        padding: 45px 35px;
+        min-width: 180px;
+        max-width: 350px;
+    }
+
+    .menu-item-full {
+        font-size: 28px;
     }
 }
 
-/* Estilos para móviles pequeños */
+/* ============================================
+   ESTILOS PARA MÓVILES PEQUEÑOS (hasta 480px)
+   ============================================ */
 @media (max-width: 480px) {
-    body {
-        padding: 0.5rem;
-        background-attachment: scroll;
+    .imagen-centrada {
+        width: 85vw;
+        height: 85vw;
+        transform: translate(0px, -137px);
+        border-radius: 35px;
+        filter: blur(25px);
     }
     
-    .contenedor {
-        padding: 1.5rem 1.5rem;
-        border-radius: 15px;
-        max-width: 100%;
-        backdrop-filter: blur(3px);
-        -webkit-backdrop-filter: blur(3px);
+    .foto-superpuesta {
+        width: 240px;
+        height: 240px;
+        transform: translate(calc(-50% + 10px), calc(-50% + 45px));
+        border-radius: 200px;
     }
     
-    p {
-        font-size: 0.9rem;
+    .contenedor-textos {
+        margin-top: 5px;
+        padding: 10px 0;
     }
     
-    .menu-toggle img {
-        width: 25px;
-        height: 25px;
+    .texto-nombre {
+        font-size: 30px;
     }
     
-    .nav-lista a {
+    .texto-subtitulo {
         font-size: 14px;
-        padding: 12px 20px;
+        letter-spacing: 1.5px;
+    }
+    
+    .titulo-nojavid {
+        font-size: 18px;
+    }
+
+    .menu-slide {
+        padding: 30px 20px;
+        min-width: 140px;
+        max-width: 280px;
+    }
+
+    .menu-item-full {
+        font-size: 20px;
+        letter-spacing: 1.5px;
+    }
+
+    .menu-close {
+        font-size: 20px;
+        top: 10px;
+        right: 10px;
+    }
+
+    .menu-nav {
+        gap: 12px;
+        margin-top: 10px;
     }
 }
 
-/* Estilos para móviles muy pequeños */
+/* ============================================
+   ESTILOS PARA MÓVILES MUY PEQUEÑOS (hasta 360px)
+   ============================================ */
 @media (max-width: 360px) {
-    .contenedor {
-        padding: 1rem 1rem;
+    .imagen-centrada {
+        width: 90vw;
+        height: 90vw;
+        transform: translate(0px, -137px);
+        border-radius: 30px;
+        filter: blur(20px);
     }
     
-    p {
-        font-size: 0.8rem;
+    .foto-superpuesta {
+        width: 200px;
+        height: 200px;
+        transform: translate(calc(-50% + 5px), calc(-50% + 35px));
+        border-radius: 200px;
+    }
+    
+    .contenedor-textos {
+        margin-top: 0px;
+    }
+    
+    .texto-nombre {
+        font-size: 26px;
+    }
+    
+    .texto-subtitulo {
+        font-size: 12px;
+        letter-spacing: 1px;
+    }
+    
+    .titulo-nojavid {
+        font-size: 16px;
+        letter-spacing: 1px;
+    }
+
+    .menu-slide {
+        padding: 25px 15px;
+        min-width: 120px;
+        max-width: 240px;
+    }
+
+    .menu-item-full {
+        font-size: 18px;
+        letter-spacing: 1px;
+    }
+
+    .menu-close {
+        font-size: 18px;
+        top: 8px;
+        right: 8px;
+    }
+
+    .menu-nav {
+        gap: 10px;
+        margin-top: 8px;
     }
 }
