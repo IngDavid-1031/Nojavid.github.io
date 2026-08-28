@@ -69,8 +69,9 @@ const LIBROS = {
     iipedro: {archivo: 'iipedro.json', nombre: '2 Pedro'},
     ijuan: {archivo: 'ijuan.json', nombre: '1 Juan'},
     iijuan: {archivo: 'iijuan.json', nombre: '2 Juan'},
+    iiijuan: {archivo: 'iiijuan.json', nombre: '3 Juan'},
     judas: {archivo: 'judas.json', nombre: 'Judas'},
-    apocalipsis: {archivo: 'apocalipsis.json', nombre: 'Apocalipsis'},
+    apocalipsis: {archivo: 'apocalipsis.json', nombre: 'Apocalipsis'}
     // Agrega más libros aquí cuando los tengas
 };
 
