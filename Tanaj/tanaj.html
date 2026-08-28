@@ -8,7 +8,7 @@
     <!-- CSS principal -->
     <link rel="stylesheet" href="styles/tanaj-styles.css">
     
-    <!-- CSS específico para PC -->
+    <!-- CSS específico para PC (oculta todo y muestra mantenimiento) -->
     <link rel="stylesheet" href="styles/tanaj-styles-pc.css" media="screen and (min-width: 769px)">
     
     <!-- CSS específico para móviles -->
@@ -17,14 +17,35 @@
 <body>
 
     <!-- ========================================== -->
-    <!-- CONTENEDOR PRINCIPAL                       -->
+    <!-- PANTALLA DE MANTENIMIENTO (SOLO PC)       -->
+    <!-- ========================================== -->
+    <div id="pantalla-mantenimiento">
+        <div class="icono-mantenimiento">🛠️</div>
+        <h1>Mantenimiento no disponible</h1>
+        <p>La versión de escritorio se encuentra en mantenimiento. Por favor, utiliza tu dispositivo móvil para acceder al contenido.</p>
+        
+        <div class="spinner-container">
+            <div class="spinner spinner-large"></div>
+        </div>
+        
+        <div class="barra-progreso">
+            <div class="barra-llena"></div>
+        </div>
+        
+        <div class="estado-mantenimiento">⚡ Actualizando sistema ⚡</div>
+        
+        <div class="nota-pie">Tanaj Digital • Versión 2.0</div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- CONTENEDOR PRINCIPAL (SOLO MÓVIL)         -->
     <!-- ========================================== -->
     <div id="contenedor-principal">
         <!-- EL CONTENIDO SE GENERA CON JAVASCRIPT -->
     </div>
 
     <!-- ========================================== -->
-    <!-- MENÚ LATERAL                              -->
+    <!-- MENÚ LATERAL (SOLO MÓVIL)                 -->
     <!-- ========================================== -->
     <div id="menu-lateral" class="menu-cerrado">
         <div class="menu-header">
