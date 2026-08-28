@@ -1,80 +1,223 @@
 // ============================================ 
-// MANTENIMIENTO - SOLO PARA PC
+// MANTENIMIENTO - CONTROL DE VISIBILIDAD
 // ============================================
 
-function mostrarMantenimiento() {
-    const anchoPantalla = window.innerWidth;
+// Configuración del texto de mantenimiento (puedes modificarlo aquí)
+const CONFIG_MANTENIMIENTO = {
+    icono: '🛠️',
+    titulo: 'Mantenimiento',
+    descripcion: 'La versión de escritorio se encuentra en mantenimiento.',
+    subDescripcion: 'Por favor, utiliza tu dispositivo móvil para acceder al contenido.',
+    estado: '⚡ Actualizando sistema ⚡',
+    version: 'NOJAVID • Versión 1.0',
+    umbralPC: 769 // Ancho mínimo para considerar PC
+};
+
+// ===== DETECTAR TIPO DE DISPOSITIVO =====
+function detectarTipoDispositivo() {
+    const ancho = window.innerWidth;
+    const esPC = ancho >= CONFIG_MANTENIMIENTO.umbralPC;
     
-    // Si es PC (pantalla >= 769px)
-    if (anchoPantalla >= 769) {
-        // Ocultar todo
-        const contenedor = document.getElementById('contenedor-principal');
-        const menu = document.getElementById('menu-lateral');
-        const overlay = document.getElementById('overlay-menu');
-        
-        if (contenedor) contenedor.style.display = 'none';
-        if (menu) menu.style.display = 'none';
-        if (overlay) overlay.style.display = 'none';
-        
-        // Configurar body
-        const body = document.body;
-        body.style.margin = '0';
-        body.style.padding = '0';
-        body.style.background = '#0a0a1a';
-        body.style.display = 'flex';
-        body.style.flexDirection = 'column';
-        body.style.justifyContent = 'center';
-        body.style.alignItems = 'center';
-        body.style.minHeight = '100vh';
-        body.style.fontFamily = "'Segoe UI', Roboto, system-ui, sans-serif";
-        
-        // Eliminar cualquier contenido previo del body
-        while (body.firstChild) {
-            body.removeChild(body.firstChild);
-        }
-        
-        // Crear el div de mantenimiento
-        const mantDiv = document.createElement('div');
-        mantDiv.id = 'pantalla-mantenimiento';
-        mantDiv.innerHTML = `
-            <div style="text-align: center; padding: 2rem; max-width: 600px;">
-                <div style="font-size: 80px; margin-bottom: 20px;">🛠️</div>
-                <h1 style="font-size: 48px; font-weight: 700; margin-bottom: 20px; background: linear-gradient(135deg, #6c95c4, #a8b5d6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Mantenimiento no disponible</h1>
-                <p style="font-size: 20px; color: #aab; margin-bottom: 30px; line-height: 1.6;">La versión de escritorio se encuentra en mantenimiento. Por favor, utiliza tu dispositivo móvil para acceder al contenido.</p>
-                <div style="display: flex; justify-content: center; align-items: center; margin: 10px 0 30px 0;">
-                    <div style="width: 80px; height: 80px; border: 6px solid rgba(108, 149, 196, 0.2); border-top: 6px solid #a8b5d6; border-radius: 50%; animation: spin 1s linear infinite;"></div>
-                </div>
-                <div style="width: 200px; height: 4px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; margin: 20px auto 0;">
-                    <div style="height: 100%; width: 0%; background: linear-gradient(90deg, #6c95c4, #a8b5d6); border-radius: 4px; animation: cargaBarra 2s ease-in-out infinite;"></div>
-                </div>
-                <div style="font-size: 14px; color: #667; margin-top: 15px; letter-spacing: 2px; text-transform: uppercase; animation: parpadeo 1.5s ease-in-out infinite;">⚡ Actualizando sistema ⚡</div>
-                <div style="margin-top: 40px; font-size: 12px; color: #445; letter-spacing: 1px;">Tanaj Digital • Versión 1.0</div>
-            </div>
-            <style>
-                @keyframes spin {
-                    0% { transform: rotate(0deg); }
-                    100% { transform: rotate(360deg); }
-                }
-                @keyframes cargaBarra {
-                    0% { width: 0%; }
-                    50% { width: 70%; }
-                    100% { width: 100%; }
-                }
-                @keyframes parpadeo {
-                    0%, 100% { opacity: 1; }
-                    50% { opacity: 0.3; }
-                }
-            </style>
-        `;
-        
-        body.appendChild(mantDiv);
-        return true;
+    // Actualizar el data attribute en el HTML
+    const detector = document.getElementById('sistema-deteccion');
+    if (detector) {
+        detector.setAttribute('data-tipo', esPC ? 'pc' : 'movil');
+        detector.setAttribute('data-ancho', ancho);
     }
     
-    return false;
+    return {
+        esPC: esPC,
+        ancho: ancho,
+        tipo: esPC ? 'PC' : 'Móvil'
+    };
 }
 
-// Ejecutar al cargar la página
+// ===== CREAR PANTALLA DE MANTENIMIENTO DINÁMICAMENTE =====
+function crearPantallaMantenimiento() {
+    // Verificar si ya existe
+    if (document.getElementById('pantalla-mantenimiento')) {
+        return;
+    }
+
+    // Crear el contenedor principal
+    const mantContainer = document.createElement('div');
+    mantContainer.id = 'pantalla-mantenimiento';
+    
+    // Crear el contenido usando la configuración
+    mantContainer.innerHTML = `
+        <div class="mantenimiento-content">
+            <div class="mantenimiento-icon">${CONFIG_MANTENIMIENTO.icono}</div>
+            <h1>${CONFIG_MANTENIMIENTO.titulo}</h1>
+            <p>${CONFIG_MANTENIMIENTO.descripcion}</p>
+            <p class="mantenimiento-sub">${CONFIG_MANTENIMIENTO.subDescripcion}</p>
+            <div class="mantenimiento-spinner"></div>
+            <div class="mantenimiento-bar">
+                <div class="mantenimiento-bar-progress"></div>
+            </div>
+            <div class="mantenimiento-status">${CONFIG_MANTENIMIENTO.estado}</div>
+            <div class="mantenimiento-version">${CONFIG_MANTENIMIENTO.version}</div>
+        </div>
+    `;
+    
+    // Insertar al final del body (después del contenido principal)
+    document.body.appendChild(mantContainer);
+    
+    console.log('✅ Pantalla de mantenimiento creada dinámicamente');
+}
+
+// ===== ACTUALIZAR VISIBILIDAD SEGÚN DISPOSITIVO =====
+function actualizarVisibilidad() {
+    const dispositivo = detectarTipoDispositivo();
+    const body = document.body;
+    const mantPantalla = document.getElementById('pantalla-mantenimiento');
+    const contenido = document.getElementById('contenido-principal');
+    
+    console.log(`📱 Dispositivo detectado: ${dispositivo.tipo} (${dispositivo.ancho}px)`);
+    console.log(`📊 Umbral PC: ${CONFIG_MANTENIMIENTO.umbralPC}px`);
+    
+    if (!mantPantalla || !contenido) {
+        console.warn('⚠️ Elementos no encontrados');
+        return;
+    }
+    
+    if (dispositivo.esPC) {
+        // Modo MANTENIMIENTO para PC
+        body.classList.remove('modo-normal');
+        body.classList.add('modo-mantenimiento');
+        
+        // Asegurar que la pantalla de mantenimiento se muestre
+        mantPantalla.classList.add('mostrar');
+        mantPantalla.style.display = 'flex';
+        
+        console.log('🖥️ Modo mantenimiento activado (PC)');
+    } else {
+        // Modo NORMAL para móvil
+        body.classList.remove('modo-mantenimiento');
+        body.classList.add('modo-normal');
+        
+        // Ocultar pantalla de mantenimiento
+        mantPantalla.classList.remove('mostrar');
+        mantPantalla.style.display = 'none';
+        
+        // Restaurar fondo del body al estilo original
+        body.style.background = '';
+        body.style.overflow = '';
+        
+        console.log('📱 Modo normal activado (Móvil)');
+    }
+}
+
+// ===== INICIALIZAR =====
 document.addEventListener('DOMContentLoaded', function() {
-    mostrarMantenimiento();
+    console.log('🚀 Mantenimiento.js cargado');
+    
+    // Crear la pantalla de mantenimiento
+    crearPantallaMantenimiento();
+    
+    // Verificar el estado inicial
+    actualizarVisibilidad();
 });
+
+// ===== VERIFICAR AL CAMBIAR EL TAMAÑO =====
+let timeoutResize;
+window.addEventListener('resize', function() {
+    clearTimeout(timeoutResize);
+    timeoutResize = setTimeout(function() {
+        actualizarVisibilidad();
+    }, 250);
+});
+
+// ===== VERIFICAR AL CAMBIAR ORIENTACIÓN =====
+window.addEventListener('orientationchange', function() {
+    setTimeout(function() {
+        actualizarVisibilidad();
+    }, 500);
+});
+
+// ===== VERIFICAR TAMBIÉN CUANDO SE CARGA COMPLETAMENTE =====
+window.addEventListener('load', function() {
+    // Pequeño retraso para asegurar que todo esté renderizado
+    setTimeout(function() {
+        actualizarVisibilidad();
+    }, 100);
+});
+
+// ============================================
+// FUNCIONES DE UTILIDAD PARA MANIPULACIÓN
+// ============================================
+
+// ===== FUNCIÓN PARA ACTUALIZAR EL TEXTO DINÁMICAMENTE =====
+function actualizarTextoMantenimiento(nuevoTexto) {
+    const mantContainer = document.getElementById('pantalla-mantenimiento');
+    if (!mantContainer) return;
+    
+    const icono = mantContainer.querySelector('.mantenimiento-icon');
+    const titulo = mantContainer.querySelector('h1');
+    const descripcion = mantContainer.querySelector('p:not(.mantenimiento-sub)');
+    const subDescripcion = mantContainer.querySelector('.mantenimiento-sub');
+    const estado = mantContainer.querySelector('.mantenimiento-status');
+    const version = mantContainer.querySelector('.mantenimiento-version');
+    
+    if (nuevoTexto.icono) icono.textContent = nuevoTexto.icono;
+    if (nuevoTexto.titulo) titulo.textContent = nuevoTexto.titulo;
+    if (nuevoTexto.descripcion) descripcion.textContent = nuevoTexto.descripcion;
+    if (nuevoTexto.subDescripcion) subDescripcion.textContent = nuevoTexto.subDescripcion;
+    if (nuevoTexto.estado) estado.textContent = nuevoTexto.estado;
+    if (nuevoTexto.version) version.textContent = nuevoTexto.version;
+    
+    console.log('✅ Texto de mantenimiento actualizado');
+}
+
+// ===== FUNCIÓN PARA CAMBIAR EL ESTADO DINÁMICAMENTE =====
+function cambiarEstadoMantenimiento(nuevoEstado) {
+    const estado = document.querySelector('.mantenimiento-status');
+    if (estado) {
+        estado.textContent = nuevoEstado;
+        console.log('✅ Estado actualizado:', nuevoEstado);
+    }
+}
+
+// ===== FUNCIÓN PARA CAMBIAR EL ICONO =====
+function cambiarIconoMantenimiento(nuevoIcono) {
+    const icono = document.querySelector('.mantenimiento-icon');
+    if (icono) {
+        icono.textContent = nuevoIcono;
+        console.log('✅ Icono actualizado:', nuevoIcono);
+    }
+}
+
+// ===== FUNCIÓN PARA OBTENER EL ESTADO ACTUAL =====
+function obtenerEstadoSistema() {
+    const detector = document.getElementById('sistema-deteccion');
+    if (detector) {
+        return {
+            tipo: detector.getAttribute('data-tipo'),
+            ancho: detector.getAttribute('data-ancho'),
+            modo: document.body.classList.contains('modo-mantenimiento') ? 'mantenimiento' : 'normal'
+        };
+    }
+    return null;
+}
+
+// ===== FUNCIÓN PARA FORZAR UN MODO ESPECÍFICO =====
+function forzarModo(modo) {
+    // modo: 'pc' o 'movil'
+    const detector = document.getElementById('sistema-deteccion');
+    if (detector) {
+        detector.setAttribute('data-forzado', modo);
+        actualizarVisibilidad();
+        console.log(`🔄 Modo forzado a: ${modo}`);
+    }
+}
+
+// Ejemplos de uso (descomentar para probar):
+// actualizarTextoMantenimiento({
+//     titulo: 'Nuevo Título',
+//     descripcion: 'Descripción personalizada',
+//     estado: '🔄 Procesando...'
+// });
+// cambiarEstadoMantenimiento('🚀 Casi listo...');
+// cambiarIconoMantenimiento('⚙️');
+// console.log('Estado actual:', obtenerEstadoSistema());
+// forzarModo('pc'); // Forzar modo PC
+// forzarModo('movil'); // Forzar modo móvil

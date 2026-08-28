@@ -43,18 +43,7 @@
     <!-- SCRIPTS                                   -->
     <!-- ========================================== -->
     <!-- MANTENIMIENTO: Solo se carga en PC -->
-    <script src="../mantenimiento/mantenimiento.js"></script>
-    
-    <!-- APP PRINCIPAL: Solo se carga en móvil -->
-    <script>
-        // Detectar si es móvil y cargar la app
-        if (window.innerWidth < 769) {
-            // Cargar el script principal dinámicamente
-            const script = document.createElement('script');
-            script.src = '../Tanaj/tanajScript.js';
-            document.body.appendChild(script);
-        }
-    </script>
+    <script src="../Tanaj/tanajScript.js"></script>
 
 </body>
 </html>

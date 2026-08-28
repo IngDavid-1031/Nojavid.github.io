@@ -7,6 +7,10 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 /* ============================================
    BODY - LAYOUT PRINCIPAL
    ============================================ */
@@ -32,7 +36,9 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
     box-shadow: 0 2px 8px rgba(0,0,0,0.6);
     z-index: 1000;
 }
@@ -68,7 +74,6 @@ body {
     line-height: 1;
 }
 
-/* Overlay de fondo - semi-transparente */
 .menu-overlay {
     position: fixed;
     top: 0;
@@ -80,7 +85,6 @@ body {
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
-    cursor: pointer; /* Indica que se puede hacer clic para cerrar */
 }
 
 .menu-overlay.active {
@@ -88,7 +92,6 @@ body {
     visibility: visible;
 }
 
-/* Menú que se desliza - solo el ancho necesario */
 .menu-slide {
     position: fixed;
     top: 0;
@@ -106,14 +109,12 @@ body {
     padding: 60px 50px;
     box-shadow: 4px 0 30px rgba(0, 0, 0, 0.8);
     overflow-y: auto;
-    cursor: default; /* Cursor normal dentro del menú */
 }
 
 .menu-overlay.active .menu-slide {
     transform: translateX(0);
 }
 
-/* Botón de cierre */
 .menu-close {
     position: absolute;
     top: 20px;
@@ -133,7 +134,6 @@ body {
     color: #ff6b6b;
 }
 
-/* Navegación del menú */
 .menu-nav {
     display: flex;
     flex-direction: column;
@@ -155,6 +155,7 @@ body {
     text-transform: uppercase;
     width: 100%;
     white-space: nowrap;
+    cursor: pointer;
 }
 
 .menu-item-full::after {
@@ -206,6 +207,19 @@ body {
 }
 
 /* ============================================
+   SECCIÓN INICIO
+   ============================================ */
+.seccion-inicio {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 80px;
+}
+
+/* ============================================
    CONTENEDOR DE LA IMAGEN
    ============================================ */
 .contenedor-imagen {
@@ -230,9 +244,6 @@ body {
     transform: translate(0px, -137px);
 }
 
-/* ============================================
-   FOTO SUPUESTA - BORDES 200 Y MOVIDA A LA IZQUIERDA
-   ============================================ */
 .foto-superpuesta {
     position: absolute;
     left: 50%;
@@ -277,11 +288,344 @@ body {
     font-weight: 900;
     color: white;
     text-align: center;
-    margin: 5px 0 0 0;
+    margin: 5px 0 20px 0;
     padding: 0;
     line-height: 1.2;
     letter-spacing: 3px;
     text-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+}
+
+/* ============================================
+   BOTONES - PROYECTOS Y PORTAFOLIO
+   ============================================ */
+.contenedor-botones {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    width: 100%;
+    max-width: 300px;
+}
+
+/* Estilos base para ambos botones */
+.btn-proyectos,
+.btn-portafolio {
+    width: 124px;
+    height: 38px;
+    border-radius: 4px;
+    background-color: #1D1E22;
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    border: 2px solid;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    font-family: Arial, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Botón PROYECTOS - Borde rosado/morado neon */
+.btn-proyectos {
+    border-color: #c084fc;
+    box-shadow: 0 0 10px rgba(192, 132, 252, 0.3);
+}
+
+.btn-proyectos:hover {
+    box-shadow: 0 0 20px rgba(192, 132, 252, 0.6), inset 0 0 20px rgba(192, 132, 252, 0.1);
+    transform: scale(1.02);
+}
+
+/* Botón PORTAFOLIO - Borde azul neon */
+.btn-portafolio {
+    border-color: #00d4ff;
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+}
+
+.btn-portafolio:hover {
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.6), inset 0 0 20px rgba(0, 212, 255, 0.1);
+    transform: scale(1.02);
+}
+
+/* Efecto de luz que recorre el borde - PROYECTOS (rosado/morado) */
+.btn-proyectos::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 4px;
+    background: conic-gradient(
+        from 0deg,
+        transparent 0deg,
+        #c084fc 30deg,
+        #a855f7 60deg,
+        #c084fc 90deg,
+        transparent 120deg,
+        transparent 360deg
+    );
+    z-index: -1;
+    animation: borderGlow 3s linear infinite;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.btn-proyectos:hover::before {
+    opacity: 1;
+}
+
+/* Efecto de luz que recorre el borde - PORTAFOLIO (azul neon) */
+.btn-portafolio::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 4px;
+    background: conic-gradient(
+        from 0deg,
+        transparent 0deg,
+        #00d4ff 30deg,
+        #0088ff 60deg,
+        #00d4ff 90deg,
+        transparent 120deg,
+        transparent 360deg
+    );
+    z-index: -1;
+    animation: borderGlow 3s linear infinite;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.btn-portafolio:hover::before {
+    opacity: 1;
+}
+
+/* Efecto de luz interna al hacer hover */
+.btn-proyectos::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(192, 132, 252, 0.15) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.btn-proyectos:hover::after {
+    opacity: 1;
+}
+
+.btn-portafolio::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.btn-portafolio:hover::after {
+    opacity: 1;
+}
+
+/* Asegurar que el texto esté por encima de los efectos */
+.btn-proyectos span,
+.btn-portafolio span {
+    position: relative;
+    z-index: 2;
+}
+
+/* Animación de luz que recorre el borde */
+@keyframes borderGlow {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* ============================================
+   DESCRIPCIÓN
+   ============================================ */
+.contenedor-descripcion {
+    max-width: 700px;
+    width: 90%;
+    margin-top: 30px;
+    padding: 20px 25px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    transition: all 0.3s ease;
+}
+
+.contenedor-descripcion:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.05);
+}
+
+.texto-descripcion {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 15px;
+    line-height: 1.8;
+    text-align: center;
+    letter-spacing: 0.5px;
+    font-weight: 300;
+    margin: 0;
+    padding: 0;
+}
+
+/* ============================================
+   SECCIÓN PROYECTOS
+   ============================================ */
+.seccion-proyectos {
+    width: 100%;
+    min-height: 100vh;
+    padding: 100px 20px 60px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(180deg, #1D1E22 0%, #2a2b30 100%);
+}
+
+.titulo-seccion {
+    color: white;
+    font-size: 42px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    margin-bottom: 50px;
+    text-align: center;
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
+    position: relative;
+}
+
+.titulo-seccion::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, #c084fc, #00d4ff);
+    border-radius: 2px;
+}
+
+.proyecto-tarjeta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    margin: 10px auto;
+}
+
+.proyecto-enlace {
+    text-decoration: none;
+    width: 100%;
+    display: block;
+}
+
+.proyecto-contenido {
+    background-color: #1D1E22;
+    border: 2px solid #00d4ff;
+    border-radius: 16px;
+    padding: 25px 25px 30px 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    transition: all 0.4s ease;
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.15);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.proyecto-contenido::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 16px;
+    background: conic-gradient(
+        from 0deg,
+        transparent 0deg,
+        #00d4ff 30deg,
+        #0088ff 60deg,
+        #00d4ff 90deg,
+        transparent 120deg,
+        transparent 360deg
+    );
+    z-index: -1;
+    animation: borderGlow 3s linear infinite;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.proyecto-contenido:hover::before {
+    opacity: 0.5;
+}
+
+.proyecto-contenido:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 0 40px rgba(0, 212, 255, 0.3);
+    border-color: #66e5ff;
+}
+
+.proyecto-titulo {
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.proyecto-imagen {
+    width: 193px;
+    height: 193px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 2px solid rgba(0, 212, 255, 0.3);
+    transition: all 0.4s ease;
+    display: block;
+}
+
+.proyecto-contenido:hover .proyecto-imagen {
+    border-color: #66e5ff;
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+}
+
+.proyecto-descripcion {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-align: center;
+    margin: 0;
 }
 
 /* ============================================
@@ -306,6 +650,7 @@ body {
     
     .texto-subtitulo {
         font-size: 16px;
+        margin-bottom: 15px;
     }
     
     .contenedor-textos {
@@ -332,5 +677,91 @@ body {
     .menu-nav {
         gap: 18px;
         margin-top: 20px;
+    }
+
+    .contenedor-botones {
+        gap: 15px;
+        max-width: 260px;
+    }
+
+    .btn-proyectos,
+    .btn-portafolio {
+        width: 110px;
+        height: 34px;
+        font-size: 11px;
+    }
+
+    .contenedor-descripcion {
+        padding: 15px 18px;
+        margin-top: 25px;
+        border-radius: 10px;
+    }
+
+    .texto-descripcion {
+        font-size: 13px;
+        line-height: 1.7;
+    }
+
+    .titulo-seccion {
+        font-size: 32px;
+        margin-bottom: 35px;
+    }
+
+    .proyecto-contenido {
+        padding: 20px 20px 25px 20px;
+        border-radius: 12px;
+    }
+
+    .proyecto-titulo {
+        font-size: 20px;
+        letter-spacing: 2px;
+    }
+
+    .proyecto-imagen {
+        width: 150px;
+        height: 150px;
+        border-radius: 10px;
+    }
+
+    .proyecto-descripcion {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 360px) {
+    .contenedor-descripcion {
+        padding: 12px 14px;
+        margin-top: 20px;
+        border-radius: 8px;
+    }
+
+    .texto-descripcion {
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+    .proyecto-contenido {
+        padding: 15px 15px 20px 15px;
+        border-radius: 10px;
+    }
+
+    .proyecto-titulo {
+        font-size: 18px;
+        letter-spacing: 1.5px;
+    }
+
+    .proyecto-imagen {
+        width: 120px;
+        height: 120px;
+        border-radius: 8px;
+    }
+
+    .proyecto-descripcion {
+        font-size: 12px;
+    }
+
+    .titulo-seccion {
+        font-size: 28px;
+        margin-bottom: 30px;
     }
 }

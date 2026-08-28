@@ -24,8 +24,8 @@
                 <div class="menu-slide" id="menuSlide">
                     <button class="menu-close" id="menuClose">✕</button>
                     <nav class="menu-nav">
-                        <a href="Torah/torah.html" class="menu-item-full">Tora</a>
-                        <!-- Aquí puedes agregar más opciones en el futuro -->
+                        <a href="#inicio" class="menu-item-full" onclick="cerrarMenuYScroll('inicio')">Inicio</a>
+                        <a href="#proyectos" class="menu-item-full" onclick="cerrarMenuYScroll('proyectos')">Proyectos</a>
                     </nav>
                 </div>
             </div>
@@ -35,19 +35,51 @@
         <span class="titulo-nojavid" id="tituloNojavid">NOJAVID</span>
     </header>
 
-    <!-- Contenedor de la imagen -->
-    <div class="contenedor-imagen">
-        <img src="iconos/iconocuadrado.png" alt="Icono cuadrado" class="imagen-centrada" loading="lazy">
-        <!-- Foto superpuesta -->
-        <img src="imagenes/foto.jpg" alt="Foto" class="foto-superpuesta" loading="lazy">
-    </div>
+    <!-- SECCIÓN INICIO -->
+    <section id="inicio" class="seccion-inicio">
+        <!-- Contenedor de la imagen -->
+        <div class="contenedor-imagen">
+            <img src="iconos/iconocuadrado.png" alt="Icono cuadrado" class="imagen-centrada" loading="lazy">
+            <!-- Foto superpuesta -->
+            <img src="imagenes/foto.jpg" alt="Foto" class="foto-superpuesta" loading="lazy">
+        </div>
 
-    <!-- Textos debajo de la imagen -->
-    <div class="contenedor-textos">
-        <h1 class="texto-nombre">Nojavid</h1>
-        <p class="texto-subtitulo">Coach & Desarrollador</p>
-    </div>
-    
+        <!-- Textos debajo de la imagen -->
+        <div class="contenedor-textos">
+            <h1 class="texto-nombre">Nojavid</h1>
+            <p class="texto-subtitulo">Coach & Desarrollador</p>
+            
+            <!-- Contenedor de botones -->
+            <div class="contenedor-botones">
+                <button class="btn-proyectos" onclick="scrollToSeccion('proyectos')">PROYECTOS</button>
+                <button class="btn-portafolio">PORTAFOLIO</button>
+            </div>
+
+            <!-- Descripción -->
+            <div class="contenedor-descripcion">
+                <p class="texto-descripcion">
+                    Este sitio web ha sido creado con el propósito de compartir información personal, experiencias, proyectos e intereses, así como contenido de carácter espiritual que contribuya a la reflexión, el aprendizaje y el crecimiento personal.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN PROYECTOS -->
+    <section id="proyectos" class="seccion-proyectos">
+        <h2 class="titulo-seccion">Mis Proyectos</h2>
+        
+        <!-- Tarjeta del proyecto TANAJ -->
+        <div class="proyecto-tarjeta">
+            <a href="Tanaj/tanaj.html" class="proyecto-enlace">
+                <div class="proyecto-contenido">
+                    <span class="proyecto-titulo">TANAJ</span>
+                    <img src="imagenes/tanaj.jpeg" alt="Tanaj" class="proyecto-imagen" />
+                    <p class="proyecto-descripcion">Explora el Tanaj</p>
+                </div>
+            </a>
+        </div>
+    </section>
+
     <!-- SCRIPT PRINCIPAL -->
     <script src="index-script.js"></script>
 </body>

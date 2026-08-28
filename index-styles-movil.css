@@ -2,9 +2,6 @@
    ESTILOS EXCLUSIVOS PARA MÓVILES Y TABLETS
    ============================================ */
 
-/* ============================================
-   HEADER PARA MÓVILES
-   ============================================ */
 .header {
     background: rgba(0, 0, 0, 0.9);
     padding: 14px 20px;
@@ -12,9 +9,6 @@
     -webkit-backdrop-filter: blur(8px);
 }
 
-/* ============================================
-   MENÚ DESLIZABLE EN MÓVILES
-   ============================================ */
 .menu-btn {
     font-size: 24px;
     padding: 2px 8px;
@@ -43,17 +37,11 @@
     margin-top: 15px;
 }
 
-/* ============================================
-   TÍTULO PARA MÓVILES - ESQUINA DERECHA
-   ============================================ */
 .titulo-nojavid {
     font-size: 20px;
     letter-spacing: 1.5px;
 }
 
-/* ============================================
-   CONTENEDOR DE IMAGEN PARA MÓVILES
-   ============================================ */
 .contenedor-imagen {
     padding: 15px 0;
     margin-top: 5px;
@@ -69,9 +57,6 @@
     filter: blur(30px);
 }
 
-/* ============================================
-   FOTO SUPUESTA - VERSIÓN MÓVIL
-   ============================================ */
 .foto-superpuesta {
     width: 300px;
     height: 300px;
@@ -79,9 +64,6 @@
     border-radius: 200px;
 }
 
-/* ============================================
-   TEXTOS DEBAJO DE LA IMAGEN - VERSIÓN MÓVIL
-   ============================================ */
 .contenedor-textos {
     padding: 15px 0;
     margin-top: 10px;
@@ -97,11 +79,73 @@
     font-size: 16px;
     font-weight: 900;
     letter-spacing: 2px;
+    margin-bottom: 15px;
 }
 
-/* ============================================
-   ESTILOS PARA TABLETS (481px - 768px)
-   ============================================ */
+.contenedor-botones {
+    gap: 12px;
+    max-width: 240px;
+}
+
+.btn-proyectos,
+.btn-portafolio {
+    width: 100px;
+    height: 32px;
+    font-size: 10px;
+    border-width: 1.5px;
+}
+
+.btn-proyectos::before,
+.btn-portafolio::before {
+    border-radius: 3px;
+    top: -1.5px;
+    left: -1.5px;
+    right: -1.5px;
+    bottom: -1.5px;
+}
+
+/* Descripción en móviles */
+.contenedor-descripcion {
+    padding: 15px 18px;
+    margin-top: 25px;
+    border-radius: 10px;
+    width: 92%;
+}
+
+.texto-descripcion {
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.seccion-proyectos {
+    padding: 80px 15px 40px 15px;
+}
+
+.titulo-seccion {
+    font-size: 32px;
+    margin-bottom: 35px;
+}
+
+.proyecto-contenido {
+    padding: 20px 20px 25px 20px;
+    border-radius: 12px;
+}
+
+.proyecto-titulo {
+    font-size: 20px;
+    letter-spacing: 2px;
+}
+
+.proyecto-imagen {
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+}
+
+.proyecto-descripcion {
+    font-size: 13px;
+}
+
 @media (min-width: 481px) and (max-width: 768px) {
     .titulo-nojavid {
         font-size: 22px;
@@ -133,6 +177,7 @@
     
     .texto-subtitulo {
         font-size: 18px;
+        margin-bottom: 18px;
     }
 
     .menu-slide {
@@ -144,11 +189,53 @@
     .menu-item-full {
         font-size: 28px;
     }
+
+    .contenedor-botones {
+        gap: 18px;
+        max-width: 280px;
+    }
+
+    .btn-proyectos,
+    .btn-portafolio {
+        width: 115px;
+        height: 36px;
+        font-size: 12px;
+    }
+
+    .contenedor-descripcion {
+        padding: 18px 22px;
+        margin-top: 28px;
+        border-radius: 12px;
+        max-width: 650px;
+    }
+
+    .texto-descripcion {
+        font-size: 14px;
+        line-height: 1.8;
+    }
+
+    .titulo-seccion {
+        font-size: 38px;
+        margin-bottom: 45px;
+    }
+
+    .proyecto-contenido {
+        padding: 25px 25px 30px 25px;
+        border-radius: 14px;
+    }
+
+    .proyecto-titulo {
+        font-size: 22px;
+        letter-spacing: 2.5px;
+    }
+
+    .proyecto-imagen {
+        width: 170px;
+        height: 170px;
+        border-radius: 12px;
+    }
 }
 
-/* ============================================
-   ESTILOS PARA MÓVILES PEQUEÑOS (hasta 480px)
-   ============================================ */
 @media (max-width: 480px) {
     .imagen-centrada {
         width: 85vw;
@@ -177,6 +264,7 @@
     .texto-subtitulo {
         font-size: 14px;
         letter-spacing: 1.5px;
+        margin-bottom: 12px;
     }
     
     .titulo-nojavid {
@@ -204,11 +292,63 @@
         gap: 12px;
         margin-top: 10px;
     }
+
+    .contenedor-botones {
+        gap: 10px;
+        max-width: 210px;
+    }
+
+    .btn-proyectos,
+    .btn-portafolio {
+        width: 90px;
+        height: 30px;
+        font-size: 9px;
+        border-width: 1.5px;
+    }
+
+    .contenedor-descripcion {
+        padding: 12px 15px;
+        margin-top: 20px;
+        border-radius: 8px;
+        width: 94%;
+    }
+
+    .texto-descripcion {
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+    .seccion-proyectos {
+        padding: 70px 12px 30px 12px;
+    }
+
+    .titulo-seccion {
+        font-size: 28px;
+        margin-bottom: 30px;
+    }
+
+    .proyecto-contenido {
+        padding: 15px 15px 20px 15px;
+        border-radius: 10px;
+        border-width: 1.5px;
+    }
+
+    .proyecto-titulo {
+        font-size: 18px;
+        letter-spacing: 1.5px;
+    }
+
+    .proyecto-imagen {
+        width: 130px;
+        height: 130px;
+        border-radius: 8px;
+    }
+
+    .proyecto-descripcion {
+        font-size: 12px;
+    }
 }
 
-/* ============================================
-   ESTILOS PARA MÓVILES MUY PEQUEÑOS (hasta 360px)
-   ============================================ */
 @media (max-width: 360px) {
     .imagen-centrada {
         width: 90vw;
@@ -236,6 +376,7 @@
     .texto-subtitulo {
         font-size: 12px;
         letter-spacing: 1px;
+        margin-bottom: 10px;
     }
     
     .titulo-nojavid {
@@ -263,5 +404,61 @@
     .menu-nav {
         gap: 10px;
         margin-top: 8px;
+    }
+
+    .contenedor-botones {
+        gap: 8px;
+        max-width: 180px;
+    }
+
+    .btn-proyectos,
+    .btn-portafolio {
+        width: 80px;
+        height: 28px;
+        font-size: 8px;
+        border-width: 1.5px;
+    }
+
+    .contenedor-descripcion {
+        padding: 10px 12px;
+        margin-top: 16px;
+        border-radius: 6px;
+        width: 96%;
+    }
+
+    .texto-descripcion {
+        font-size: 11px;
+        line-height: 1.5;
+    }
+
+    .seccion-proyectos {
+        padding: 60px 10px 20px 10px;
+    }
+
+    .titulo-seccion {
+        font-size: 24px;
+        margin-bottom: 25px;
+    }
+
+    .proyecto-contenido {
+        padding: 12px 12px 16px 12px;
+        border-radius: 8px;
+        border-width: 1.5px;
+    }
+
+    .proyecto-titulo {
+        font-size: 16px;
+        letter-spacing: 1px;
+    }
+
+    .proyecto-imagen {
+        width: 100px;
+        height: 100px;
+        border-radius: 6px;
+        border-width: 1.5px;
+    }
+
+    .proyecto-descripcion {
+        font-size: 11px;
     }
 }
