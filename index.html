@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NOJAVID</title>
-    
-    <!-- CSS principal -->
-    <link rel="stylesheet" href="index-styles.css">
-    
+
+    <!-- Css General-->
+    <link rel="stylesheet" href="index-general.css">
+        
     <!-- CSS específico para móviles -->
-    <link rel="stylesheet" href="index-styles-movil.css" media="screen and (max-width: 768px)">
+    <link rel="stylesheet" href="index-styles-movil.css" media="(max-width: 768px)">
 </head>
 <body>
     <!-- HEADER -->
@@ -32,16 +32,27 @@
         </div>
 
         <!-- Título NOJAVID en la esquina derecha -->
-        <span class="titulo-nojavid" id="tituloNojavid">NOJAVID</span>
+        <span class="titulo-nojavid" id="tituloNojavid">
+            <span class="noja">NOJA</span><span class="vid">VID</span>
+        </span>
     </header>
 
     <!-- SECCIÓN INICIO -->
     <section id="inicio" class="seccion-inicio">
         <!-- Contenedor de la imagen -->
         <div class="contenedor-imagen">
-            <img src="iconocuadrado.png" alt="Icono cuadrado" class="imagen-centrada" loading="lazy">
-            <!-- Foto superpuesta -->
-            <img src="foto.png" alt="Foto" class="foto-superpuesta" loading="lazy">
+            <!-- Ondas extra -->
+            <div class="onda-extra-1"></div>
+            <div class="onda-extra-2"></div>
+            <div class="onda-extra-3"></div>
+            
+            <!-- Fondo de color -->
+            <div class="fondo-color"></div>
+            
+            <!-- Foto superpuesta con borde degradado -->
+            <div class="foto-wrapper">
+                <img src="foto.png" alt="Foto" class="foto-superpuesta" loading="lazy">
+            </div>
         </div>
 
         <!-- Textos debajo de la imagen -->

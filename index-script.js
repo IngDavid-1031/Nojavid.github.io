@@ -2,17 +2,55 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Script cargado correctamente');
 
-    // ===== EFECTO DE ESCRITURA PARA EL TÍTULO =====
+    // ===== EFECTO DE ESCRITURA FLUIDA PARA EL TÍTULO =====
     const titulo = document.getElementById('tituloNojavid');
     if (titulo) {
         console.log('Título encontrado');
-        titulo.style.animation = 'none';
-        titulo.offsetHeight;
-        titulo.style.animation = 'escribir 2.5s steps(25) 1s forwards, parpadeo 0.8s step-end 3';
         
-        titulo.addEventListener('animationend', function() {
-            this.style.borderColor = 'transparent';
-        }, { once: true });
+        // Función que ejecuta la animación de escritura fluida
+        function ejecutarAnimacionEscritura() {
+            // Resetear la animación
+            titulo.style.animation = 'none';
+            titulo.offsetHeight; // Forzar reflow
+            
+            // Aplicar animación de escritura fluida
+            titulo.style.animation = 'escribirFluido 2.5s cubic-bezier(0.4, 0.0, 0.2, 1) 0.5s forwards';
+            
+            // Añadir parpadeo del cursor
+            setTimeout(() => {
+                titulo.style.animation = 'escribirFluido 2.5s cubic-bezier(0.4, 0.0, 0.2, 1) 0.5s forwards, parpadeoFluido 0.8s ease-in-out 3';
+            }, 100);
+            
+            // Eliminar el borde después de la animación
+            setTimeout(() => {
+                titulo.style.borderColor = 'transparent';
+            }, 4000);
+        }
+
+        // Función que ejecuta el borrado fluido
+        function ejecutarBorrado() {
+            return new Promise((resolve) => {
+                titulo.style.animation = 'borrarFluido 0.8s cubic-bezier(0.4, 0.0, 0.2, 1) forwards';
+                setTimeout(() => {
+                    resolve();
+                }, 1000);
+            });
+        }
+
+        // Ejecutar la primera vez
+        ejecutarAnimacionEscritura();
+
+        // Configurar repetición cada 2 minutos (120000 ms)
+        setInterval(async () => {
+            // Primero borrar el texto con animación fluida
+            await ejecutarBorrado();
+            
+            // Pequeña pausa antes de escribir de nuevo
+            setTimeout(() => {
+                ejecutarAnimacionEscritura();
+            }, 500);
+            
+        }, 120000); // 2 minutos
     } else {
         console.error('No se encontró el título');
     }
