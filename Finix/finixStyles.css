@@ -143,16 +143,129 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
+    cursor: text;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.recuadro-escritura:hover {
+    background-color: #0a1a2a;
 }
 
 .texto-animado {
     color: #c0d0e0;
     font-size: 13px;
     font-weight: 500;
-    line-height: 1.5;
+    line-height: 1.6;
     word-break: break-word;
     white-space: pre-wrap;
+    min-height: 20px;
+    max-height: 100%;
+    overflow-y: auto;
+    transition: all 0.3s ease;
+    cursor: text;
+    position: relative;
+    z-index: 1;
+    user-select: none;
+    font-family: 'Courier New', monospace;
+    width: 100%;
+}
+
+/* Efecto de cursor parpadeante durante la animación */
+.texto-animado.animando::after {
+    content: '|';
+    color: #00FFD4;
+    animation: parpadear 0.7s infinite;
+    margin-left: 2px;
+}
+
+@keyframes parpadear {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+/* "Procesando..." en color verde neon */
+.texto-animado.procesando {
+    color: #00FFD4 !important;
+    font-weight: 600;
+}
+
+/* Estilo para cuando el texto está en modo edición */
+.texto-animado[contenteditable="true"] {
+    color: white !important;
+    background-color: rgba(0, 210, 255, 0.05);
+    border: 1px solid #00FFD4;
+    border-radius: 4px;
+    padding: 8px !important;
+    outline: none;
+    min-height: 40px;
+    cursor: text;
+    user-select: text !important;
+    caret-color: #00FFD4;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.texto-animado[contenteditable="true"]:focus {
+    border-color: #00FFD4;
+    box-shadow: 0 0 20px rgba(0, 255, 212, 0.15);
+}
+
+/* Placeholder cuando está vacío en modo edición */
+.texto-animado[contenteditable="true"]:empty:before {
+    content: "Escribe aquí...";
+    color: #666;
+    font-style: italic;
+    opacity: 0.7;
+}
+
+/* Eliminar cualquier selección cuando no está en modo edición */
+.texto-animado:not([contenteditable="true"])::selection {
+    background: transparent;
+    color: #c0d0e0;
+}
+
+/* Estilos para los items del resultado */
+.texto-animado .item-resultado {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 8px;
+    padding: 6px 12px;
+    margin: 3px 0;
+    animation: aparecerItem 0.5s ease-out;
+    transition: all 0.3s ease;
+}
+
+.texto-animado .item-resultado .icono {
+    font-size: 18px;
+    margin-right: 4px;
+}
+
+.texto-animado .item-resultado .texto {
+    color: white;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+.texto-animado .item-resultado .precio {
+    color: #00FFD4;
+    font-weight: 700;
+    font-size: 13px;
+}
+
+/* Animación de aparición */
+@keyframes aparecerItem {
+    0% {
+        opacity: 0;
+        transform: translateX(-10px) scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
 }
 
 /* ========== SECCIÓN AUDIO ========== */
@@ -423,4 +536,22 @@ body {
         width: 90%;
         max-width: 319px;
     }
+}
+
+/* ========== SCROLLBAR PERSONALIZADA ========== */
+.texto-animado::-webkit-scrollbar {
+    width: 4px;
+}
+
+.texto-animado::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.texto-animado::-webkit-scrollbar-thumb {
+    background: #1C2830;
+    border-radius: 2px;
+}
+
+.texto-animado::-webkit-scrollbar-thumb:hover {
+    background: #2a3a4a;
 }
